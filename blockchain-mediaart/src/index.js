@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Dashboard from './components/dashboard/dashboard';
+import Gallery from './components/gallery/gallery';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Gallery />
   </React.StrictMode>,
   document.getElementById('root')
 );
