@@ -1,11 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
+
 class Dashboard extends React.Component {
     render(){
         return (
             <div>
-                <h1>hello</h1>
+                <h1>Dashboard page</h1>
                 
                 <button type="button" class="btn btn-primary">Primary</button>
                 <button type="button" class="btn btn-secondary">Secondary</button>
