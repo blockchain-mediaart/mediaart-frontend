@@ -1,0 +1,10 @@
+
+.graph-svg {
+    position: absolute; 
+    left: 0; 
+    top: 0;
+}
+
+html {
+    height: 100%;
+}
