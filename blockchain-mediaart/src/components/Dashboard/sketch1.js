@@ -28,6 +28,7 @@ export default function sketch1(p) {
     p.rotateY(p.frameCount * rotateRate);
     p.torus(70, 20);
     p.pop();
+    // p.scale(2, 2);
 
   };
 };

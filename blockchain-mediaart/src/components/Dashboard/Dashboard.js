@@ -23,11 +23,15 @@ class Dashboard extends React.Component {
                         <P5Wrapper sketch={sketch1} />
                     </div>
                     <div className="col-md-6">
-                        <div id="graph-container"></div>
+                        <div id="graph-container" onClick={(e) => this.handleClick(e)}></div>
                     </div>
                 </div> 
             </div>
         );
+    }
+
+    handleClick(e) {
+        console.log(e);
     }
 
     componentDidMount() {
@@ -54,12 +58,12 @@ class Dashboard extends React.Component {
             // generateCommitHash?: () => Commit["hash"];
             // compareBranchesOrder?: CompareBranchesOrder;
         }
-        const gitgraph = createGitgraph(graphContainer, options);
+        const gitGraph = createGitgraph(graphContainer, options);
          
         // Simulate git commands with Gitgraph API.
-        const user0 = gitgraph.branch("lucetre");
-        const user1 = gitgraph.branch("Yunny");
-        const user2 = gitgraph.branch("JSKeum");
+        const user0 = gitGraph.branch("lucetre");
+        const user1 = gitGraph.branch("Yunny");
+        const user2 = gitGraph.branch("JSKeum");
 
         user0.commit("모자라나 모듈 생성");
 
@@ -73,10 +77,35 @@ class Dashboard extends React.Component {
         user2.commit("눈동자 색 추천");
          
         user0.merge(user2).tag("v1.0.1");
-        user1.commit("전체적인 다듬기");
+        user1.commit({
+            subject: "전체적인 다듬기",
+            body: "body",
+            hash: "hash",
+            // style?: TemplateOptions["commit"];
+            // dotText?: string;
+            // tag?: string;
+            onClick: commit => console.log("onClick", commit),
+            onMessageClick: commit => console.log("onMessageClick", commit),
+            onMouseOver: commit => console.log("onMouseOver", commit),
+            onMouseOut: commit => console.log("onMouseOut", commit),
+        });
         
         user0.merge(user1)
         user0.commit('배경 테마 설정').tag("v1.1.0");
+
+        // gitGraph.canvas.addEventListener( "graph:render", function ( event ) {
+        //     console.log( event.data.id, "graph has been rendered" );
+        //   } );
+          
+        //   gitGraph.canvas.addEventListener( "commit:mouseover", function ( event ) {
+        //     console.log( "You're over a commit.", event.data );
+        //     this.style.cursor = "pointer";
+        //   } );
+          
+        //   gitGraph.canvas.addEventListener("commit:mouseout", function (event) {
+        //     console.log( "You just left this commit ->", event.data );
+        //     this.style.cursor = "auto";
+        //   });
     }
 }
 
