@@ -9,7 +9,6 @@ class MyMediaart extends React.Component {
     metamaskProvider();
   }
 
-
   render() {
     return (
       <div>
