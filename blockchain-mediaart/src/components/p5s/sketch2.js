@@ -1,6 +1,7 @@
 // p5.js without react
 
-export default function sketch(p) {
+
+export default function sketch2(p) {
   let rotation = 0;
 
   p.setup = function () {
@@ -14,7 +15,7 @@ export default function sketch(p) {
   };
 
   p.draw = function () {
-    p.background(255);
+    p.background(120);
     p.translate(240, 0, 0);
     p.push();
     p.rotateZ(p.frameCount * 0.01);
@@ -23,7 +24,7 @@ export default function sketch(p) {
     p.cylinder(70, 70);
     p.pop();
 
-    p.translate(-240 * 2, 200, 0);
+    p.translate(-120 * 2, 200, 0);
     p.push();
     p.rotateZ(p.frameCount * 0.01);
     p.rotateX(p.frameCount * 0.01);
