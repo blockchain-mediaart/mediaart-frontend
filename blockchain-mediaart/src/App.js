@@ -1,5 +1,5 @@
 import React from 'react';
-import { Main, Gallery, MyMediaart, Dashboard, Detail } from './components';
+import { Main, Gallery,Gallery2, MyMediaart, Dashboard, Detail } from './components';
 import {
   BrowserRouter as Router,
   Route,
@@ -19,6 +19,9 @@ function App() {
           </Route>  
           <Route exact path='/gallery'>
             <Gallery />
+          </Route>
+          <Route exact path='/gallery2'>
+            <Gallery2 />
           </Route>
           <Route exact path='/MyMediaart'>
             <MyMediaart />
