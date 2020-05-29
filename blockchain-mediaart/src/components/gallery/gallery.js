@@ -1,24 +1,66 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.css';
-class Gallery extends React.Component {
-    render(){
-        return (
-            <div>
-                <h1>hello gallery</h1>
-                
-                <button type="button" class="btn btn-primary">Primary</button>
-                <button type="button" class="btn btn-secondary">Secondary</button>
-                <button type="button" class="btn btn-success">Success</button>
-                <button type="button" class="btn btn-danger">Danger</button>
-                <button type="button" class="btn btn-warning">Warning</button>
-                <button type="button" class="btn btn-info">Info</button>
-                <button type="button" class="btn btn-light">Light</button>
-                <button type="button" class="btn btn-dark">Dark</button>
-                <button type="button" class="btn btn-link">Link</button>
-            </div>
-        );
-    }
-}
+import { Jumbotron, Button } from 'reactstrap';
+import { Media } from 'reactstrap';
+import { useHistory } from "react-router-dom";
+
+
+const Gallery = (props) => {
+
+const history = useHistory();
+  return (
+    <div>
+      <Jumbotron>
+        <h1 className="display-3">Hello, ARTIST!</h1>
+        <p className="lead">Welcome to the CREATIVE GALLERY</p>
+        <hr className="my-2" />
+        <p></p>
+        <p className="lead">
+          <Button color="primary" onClick={()=> history.push("/gallery2")}>View More</Button>
+        </p>
+      </Jumbotron>
+      <Media>
+        <Media left top href="#">
+          <Media object data-src="holder.js/64x64" alt="Generic placeholder image" />
+        </Media>
+        <Media body>
+          <Media heading>
+            Top aligned media
+          </Media>
+          media art 1
+        </Media>
+      </Media>
+      <Media className="mt-1">
+        <Media left middle href="#">
+          <Media object data-src="holder.js/64x64" alt="Generic placeholder image" />
+        </Media>
+        <Media body>
+          <Media heading>
+            Middle aligned media
+          </Media>
+          media art 2
+        </Media>
+      </Media>
+      <Media className="mt-1">
+        <Media left bottom href="#">
+          <Media object data-src="holder.js/64x64" alt="Generic placeholder image" />
+        </Media>
+        <Media body>
+          <Media heading>
+            Bottom aligned media
+          </Media>
+          media art 3
+        </Media>
+      </Media>
+      
+      
+      
+    </div>
+
+    
+    
+  );
+};
+
+
 
 export default Gallery;
