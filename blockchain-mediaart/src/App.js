@@ -5,6 +5,8 @@ import {
   Route,
   Switch
 } from "react-router-dom";
+import './App.css';
+import logo from './img/abclogo.png';
 
 // import './App.css';
 
@@ -12,7 +14,10 @@ function App() {
   return (
     <Router>
     
-      <div className="App">    
+      <div className="App">
+        <header>
+        <img src={logo} width="200" height= "120" />
+        </header> 
         <Switch>
           <Route exact path='/'>
             <Main />

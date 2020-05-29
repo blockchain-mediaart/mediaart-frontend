@@ -5,6 +5,7 @@ import P5Wrapper from 'react-p5-wrapper';
 import sketch from '../p5s/sketch';
 import sketch2 from '../p5s/sketch2';
 import sketch3 from '../p5s/sketch3';
+import "./Gallery.css"
 
 //const history = useHistory(); //nClick={() => history.push("/gallery2")
 
@@ -15,14 +16,13 @@ class Gallery extends React.Component {
   render() {
     return (
       <div>
-        <Jumbotron>
+        <Jumbotron fluid color = "black" className='jumbo'>
           <h1 className="display-3">Hello, ARTIST!</h1>
           <p className="lead">Welcome to the CREATIVE GALLERY</p>
           <hr className="my-2" />
-          <p></p>
+          <p>hello</p>
           <p className="lead">
             <Link to="./Gallery2" className="btn btn-primary">View More</Link>
-
           </p>
         </Jumbotron>
         <Media>

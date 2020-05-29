@@ -13,39 +13,41 @@ class Gallery2 extends React.Component {
 
 
     <div>
-      <Table dark hover>
+      <Table color = "#e9ecef" hover>
         <thead>
           <tr>
             <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Stars</th>
             <th>Username</th>
+            <th>Artwork</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td>55</td>
+            <td>@Iamthebest</td>
+            <td>#SKETCH</td>
           </tr>
           <tr>
             <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
+            <td>47</td>
+            <td>@Hanwoo</td>
+            <td>#LION</td>
           </tr>
           <tr>
             <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
+            <td>38</td>
+            <td>@CRYTOBB</td>
+            <td>#efef</td>
           </tr>
         </tbody>
       </Table>
       <CardColumns>
         <MediaCard title = "title1" subtitle = 'subtitle1' text = "lalalal" insidetext = 'toggle view' sketch = {sketch}/>
         <MediaCard title = "title1" subtitle = 'subtitle1' sketch = {sketch}/>
+        <MediaCard title = "title1" subtitle = 'subtitle1' sketch = {sketch2}/>
+        <MediaCard title = "title1" subtitle = 'subtitle1' sketch = {sketch2}/>
         
       </CardColumns>
     </div>
