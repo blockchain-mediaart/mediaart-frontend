@@ -1,11 +1,10 @@
 // p5.js without react
 
-export default function sketch1(p) {
-  let rotateRate = 0.01;
+export default function sketch11(p) {
+  let rotateRate = 0.1;
 
   p.setup = function () {
     const parent = p.canvas.parentElement;
-    console.log(parent);
     p.createCanvas(parent.offsetWidth, 500, p.WEBGL);
   };
 
@@ -28,6 +27,7 @@ export default function sketch1(p) {
     p.rotateY(p.frameCount * rotateRate);
     p.torus(70, 20);
     p.pop();
+    // p.scale(2, 2);
 
   };
 };
