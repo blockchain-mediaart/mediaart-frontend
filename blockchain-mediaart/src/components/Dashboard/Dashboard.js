@@ -1,18 +1,48 @@
 import React from 'react';
 import P5Wrapper from 'react-p5-wrapper';
 import 'bootstrap/dist/css/bootstrap.css';
-import sketch1 from './sketch1'
+import sketch0 from './sketches/sketch0.js';
+import sketch1 from './sketches/sketch1.js';
+import sketch2 from './sketches/sketch2.js';
+import sketch3 from './sketches/sketch3.js';
+import sketch4 from './sketches/sketch4.js';
+import sketch5 from './sketches/sketch5.js';
+import sketch6 from './sketches/sketch6.js';
+import sketch7 from './sketches/sketch7.js';
+import sketch8 from './sketches/sketch8.js';
+import sketch9 from './sketches/sketch9.js';
+import sketch10 from './sketches/sketch10.js';
+import sketch11 from './sketches/sketch11.js';
 import './Dashboard.css';
 import { createGitgraph } from "@gitgraph/js";
 
+const sketches = [sketch0, sketch1, sketch2, sketch3, sketch4, sketch5, sketch6, sketch7, sketch8, sketch9, sketch10, sketch11];
+
 class Dashboard extends React.Component {
+   constructor(props) {
+        super(props);
+        this.mediaArt = props.mediaArt;
+        this.state = {
+            commit: null,
+            sketch: null,
+        };
+    }
+    
+    changeCommit(_commit, sketchId) {
+        console.log('>> Changed to ', _commit);
+        this.setState({
+            commit: _commit,
+            sketch: sketches[sketchId],
+        });
+    }
+    
     render(){
         return (
             <div>
-                <h1>모자라나 대쉬보드</h1>
+                <h1>{this.mediaArt.title} 대쉬보드</h1>
                 <div className="row">
                     <div className="col-md-6">
-                        <h5>모자라나_9d0ffcc</h5>
+                        <h5>{this.mediaArt.title}_{this.state.commit ? this.state.commit.hashAbbrev : 'fffffff'}</h5>
                     </div>
                     <div className="col-md-6">
                         <h5>Version Control</h5>
@@ -20,18 +50,14 @@ class Dashboard extends React.Component {
                 </div> 
                 <div className="row">
                     <div className="col-md-6 hidden-md-down">
-                        <P5Wrapper sketch={sketch1} />
+                        <P5Wrapper sketch={this.state.sketch?this.state.sketch:sketches[11]} />
                     </div>
                     <div className="col-md-6">
-                        <div id="graph-container" onClick={(e) => this.handleClick(e)}></div>
+                        <div id="graph-container"></div>
                     </div>
                 </div> 
             </div>
         );
-    }
-
-    handleClick(e) {
-        console.log(e);
     }
 
     componentDidMount() {
@@ -65,47 +91,31 @@ class Dashboard extends React.Component {
         const user1 = gitGraph.branch("Yunny");
         const user2 = gitGraph.branch("JSKeum");
 
-        user0.commit("모자라나 모듈 생성");
+        // subject: "전체적인 다듬기",
+        // style?: TemplateOptions["commit"];
+        // dotText?: string;
+        // tag?: string;
+        // onClick: commit => this.changeCommit(commit),
+        // onMessageClick: commit => console.log("onMessageClick", commit),
+        // onMouseOver: commit => console.log("onMouseOver", commit),
+        // onMouseOut: commit => console.log("onMouseOut", commit),
 
-        user1.merge(user0);
-        user1.commit("윤곽선 그리기");
-        user1.commit("배경색 정하기");
+        user0.commit({subject: "모자라나 모듈 생성", onClick: commit => this.changeCommit(commit, 0)});
+        user1.merge({branch: user0, commitOptions: {subject: "First Merge", onClick: commit => this.changeCommit(commit, 1)}});
+        user1.commit({subject: "윤곽선 그리기", onClick: commit => this.changeCommit(commit, 2)});
+        user1.commit({subject: "배경색 정하기", onClick: commit => this.changeCommit(commit, 3)});
          
-        user0.commit("실루엣 완성").tag("v1.0.0");;
-        user2.merge(user0);
-        user0.commit("눈 그리기");
-        user2.commit("눈동자 색 추천");
+        user0.commit({subject: "실루엣 완성", onClick: commit => this.changeCommit(commit, 4)}).tag("v1.0.0");;
+        user2.merge({branch: user0, commitOptions: {subject: "2nd Merge", onClick: commit => this.changeCommit(commit, 5)}});
+        user0.commit({subject: "눈 그리기", onClick: commit => this.changeCommit(commit, 6)});
+        user2.commit({subject: "눈동자 색 추천", onClick: commit => this.changeCommit(commit, 7)});
          
-        user0.merge(user2).tag("v1.0.1");
-        user1.commit({
-            subject: "전체적인 다듬기",
-            body: "body",
-            hash: "hash",
-            // style?: TemplateOptions["commit"];
-            // dotText?: string;
-            // tag?: string;
-            onClick: commit => console.log("onClick", commit),
-            onMessageClick: commit => console.log("onMessageClick", commit),
-            onMouseOver: commit => console.log("onMouseOver", commit),
-            onMouseOut: commit => console.log("onMouseOut", commit),
-        });
+        user0.merge({branch: user2, commitOptions: {subject: "3rd Merge", onClick: commit => this.changeCommit(commit, 8)}}).tag("v1.0.1");
+        user1.commit({subject: "전체적인 다듬기", onClick: commit => this.changeCommit(commit, 9)});
         
-        user0.merge(user1)
-        user0.commit('배경 테마 설정').tag("v1.1.0");
-
-        // gitGraph.canvas.addEventListener( "graph:render", function ( event ) {
-        //     console.log( event.data.id, "graph has been rendered" );
-        //   } );
-          
-        //   gitGraph.canvas.addEventListener( "commit:mouseover", function ( event ) {
-        //     console.log( "You're over a commit.", event.data );
-        //     this.style.cursor = "pointer";
-        //   } );
-          
-        //   gitGraph.canvas.addEventListener("commit:mouseout", function (event) {
-        //     console.log( "You just left this commit ->", event.data );
-        //     this.style.cursor = "auto";
-        //   });
+        user0.merge({branch: user1, commitOptions: {subject: "4th Merge", onClick: commit => this.changeCommit(commit, 10)}});
+        const branch = user0.commit({subject: "배경 테마 설정", onClick: commit => this.changeCommit(commit, 11)}).tag("v1.1.0");
+        this.changeCommit(branch._graph.commits[11], 11);
     }
 }
 

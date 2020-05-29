@@ -27,7 +27,7 @@ function App() {
             <Detail />
           </Route>
           <Route exact path='/dashboard'>
-            <Dashboard />
+            <Dashboard mediaArt={{title: "Mosa Lina"}} />
           </Route>
           <Route path='*'>
             <h1>PAGE NOT FOUND</h1>
