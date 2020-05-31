@@ -1,14 +1,12 @@
 import React, { useCallback } from 'react';
 import { useWeb3 } from '@openzeppelin/network/react';
 
-// const infuraProjectId = 'a016e377bb334720aabe9925e35f4184';
-
 export default function Web3ProviderConnectButton() {
   const web3Context = useWeb3();
   return (
     <div className="provider">
-      <h1>Infura React Dapp with Components!</h1>
-      <Web3Data title="Web3 Data" web3Context={web3Context} />
+      <p>메타마스크 로그인</p>
+      <Web3Data web3Context={web3Context} />
     </div>
   );
 }
@@ -32,12 +30,13 @@ function Web3Data(props) {
         Your address: {accounts && accounts.length ? accounts[0] : 'Unknown'}
       </div>
       <div>
-        Provider: {providerName} & Network id, name: {networkId}, {networkName}
+        <p>Provider: {providerName}</p>
+        <p>Network : {networkName}  (id:{networkId}) </p>
       </div>
 
       {accounts && accounts.length ? (
         <div>
-          web3 프로바이더에 연결되었습니다
+          {networkName} 이더리움에 연결되었습니다
         </div>
       ) : !!networkId ? (
         <div>

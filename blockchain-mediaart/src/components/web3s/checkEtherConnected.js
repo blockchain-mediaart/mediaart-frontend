@@ -7,11 +7,7 @@ export default async function checkEtherConnected() {
     try {
       // Request account access if needed
       await window.ethereum.enable();
-
-      let account = window.web3.eth.accounts[0];
-      // alert("account :" + account);
       // Acccounts no w exposed
-      // web3.eth.sendTransaction({/* ... */});
     } catch (error) {
       // User denied account access...
       console.log("error : " + error);
