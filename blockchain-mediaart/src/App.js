@@ -28,9 +28,6 @@ function App() {
           <Route exact path='/Gallery'>
             <Gallery />
           </Route>
-          <Route exact path='/gallery2'>
-            <Gallery2 />
-          </Route>
           <Route exact path='/MyMediaart'>
             <MyMediaart />
           </Route>
