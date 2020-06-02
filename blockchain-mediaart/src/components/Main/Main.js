@@ -14,14 +14,18 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className = 'jum'>
         <Jumbotron fluid color = "black" className='jumbo'>
-          <h1 className="title">Hello, ARTIST!</h1>
-          <p className="lead_text">Welcome to the ABC, the world full of Art with Block-Chain</p>
+          <h1>Hello, ARTIST!</h1>
+          <p className="lead_text">Welcome to the <strong>ABC</strong>, the world full of Art with Block-Chain</p>
+          <p className="lead_text">The easiest way to be CREATIVE is here. Like <strong>ABC</strong>! Simple BUT STRONG</p>
           <hr className="my-2" />
-          <p>The easiest way to be CREATIVE is here. Like ABC!</p>
+          <h1>안녕하세요.</h1>
+          <p>이곳은 블록체인기반 미디어 아트 플랫폼 <strong>ABC</strong>(Art with Block-Chain)입니다.</p> 
+          <p><strong>ABC</strong>는 이름처럼 쉽지만, 많은 걸 가능하게 하죠.</p>
+          <p> 지금 시작해보세요!  </p>
           <p className="lead">
-            <Link to="./Gallery" className="btn"><strong>View More</strong></Link>
+            <Link to="./Gallery" class="btn btn-outline-success"><strong>View More</strong></Link>
           </p>
         </Jumbotron>
         <Media>
