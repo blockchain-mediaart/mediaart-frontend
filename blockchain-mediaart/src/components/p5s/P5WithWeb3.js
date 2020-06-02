@@ -1,7 +1,7 @@
 import React from 'react';
 import { useWeb3 } from '@openzeppelin/network/react';
 import P5Wrapper from 'react-p5-wrapper';
-
+import './P5WithWeb3.css';
 import sketch from "./sketch";
 
 
@@ -12,7 +12,7 @@ export default function P5WithWeb3() {
 
   return (
     <div className="provider">
-      <h1>나의 미디어 아트</h1>
+      <h1>My MediaArt</h1>
       {accounts && accounts.length && networkId === 3 ?
         <P5Wrapper sketch={sketch} color={100} />
         : accounts && accounts.length ?

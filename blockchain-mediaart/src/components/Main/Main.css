@@ -4,6 +4,44 @@
 
 }
 
+.title {
+ font-size: 30px;
+ text-align: left;
+ text-indent:50px;
+}
+
+.lead_text {
+    font-size: 20px;
+    text-align: left;
+    text-indent:50px;
+
+}
+
+.jumbo p {
+    font-size: 20px;
+    text-align: left;
+    text-indent:50px;
+
+}
+
+.my-2 {
+    background-color: aquamarine;
+    height: 10px;
+}
+
+.btn{
+    text-indent: 0px;
+    background-color: aquamarine;
+    color: aquamarine;
+}
+
+.lead p {
+    background-color: aquamarine;
+}
+.lead{
+    font-size: 20px;
+}
+
 div.jumbo.jumbotron.jumbotron-fruid {
     background-color: transparent;
 }
