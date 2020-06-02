@@ -12,21 +12,21 @@ import './App.css';
 import logo from './img/abclogo.png';
 import Web3ProviderConnectButton from './components/web3s/Web3ProviderConnectButton';
 
-// import './App.css';
+
 
 function App() {
 
   return (
-    <Router>
     
+    <Router>
       <div className="App">
         <header>
           <div className = "logo">
             <img src={logo} width="200" height= "120" />
           </div>
-        <div className = "metamask_login">
-        <Web3ProviderConnectButton />
-        </div>
+          <div className = "metamask_login">
+          <Web3ProviderConnectButton />
+         </div>
         </header> 
         <Switch>
           <Route exact path='/'>
