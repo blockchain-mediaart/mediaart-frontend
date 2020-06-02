@@ -25,7 +25,6 @@ class MyMediaart extends React.Component {
     const inputCode = this.inputCode();
     return (
       <div>
-        <Web3ProviderConnectButton />
         <P5withWeb3 codeInput={this.state.code} />
         {inputCode}
       </div>
