@@ -5,9 +5,11 @@ export default function sketch(p) {
   let color;
 
   p.setup = function () {
+
     p.createCanvas(1000, 600, p.WEBGL);
     color=0;
     
+
   };
 
 

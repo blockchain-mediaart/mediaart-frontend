@@ -1,66 +1,57 @@
-import React from 'react';
-import { Jumbotron, Button, Media, } from 'reactstrap';
-import { Link } from "react-router-dom"; 
 
-
-
-
-//const history = useHistory(); //nClick={() => history.push("/gallery2")
-
+import React, { useState } from 'react';
+import { Card, Table, CardColumns,CardImgOverlay, CardText, CardBody, CardTitle, CardSubtitle, Button, Collapse } from 'reactstrap';
+import P5Wrapper from 'react-p5-wrapper';
+import sketch from '../p5s/sketch'
+import sketch2 from '../p5s/sketch2'
+import sketch3 from '../p5s/sketch3'
+import MediaCard from './MediaCard'
 
 class Gallery extends React.Component {
-
-
   render() {
     return (
-      <div>
-        <Jumbotron>
-          <h1 className="display-3">Hello, ARTIST!</h1>
-          <p className="lead">Welcome to the CREATIVE GALLERY</p>
-          <hr className="my-2" />
-          <p></p>
-          <p className="lead">
-          <Link to="./Gallery2" className="btn btn-primary">View More</Link>
-            
-          </p>
-        </Jumbotron>
-        <Media>
-          <Media left top href="#">
-            <Media object data-src="holder.js/64x64" alt="Generic placeholder image" />
-          </Media>
-          <Media body>
-            <Media heading>
-              Top aligned media
-                </Media>
-                media art 1
-              </Media>
-        </Media>
-        <Media className="mt-1">
-          <Media left middle href="#">
-            <Media object data-src="holder.js/64x64" alt="Generic placeholder image" />
-          </Media>
-          <Media body>
-            <Media heading>
-              Middle aligned media
-                </Media>
-                media art 2
-              </Media>
-        </Media>
-        <Media className="mt-1">
-          <Media left bottom href="#">
-            <Media object data-src="holder.js/64x64" alt="Generic placeholder image" />
-          </Media>
-          <Media body>
-            <Media heading>
-              Bottom aligned media
-                </Media>
-                media art 3
-              </Media>
-        </Media>
 
 
+    <div>
+      <Table color = "#e9ecef" hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Stars</th>
+            <th>Username</th>
+            <th>Artwork</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>55</td>
+            <td>@Iamthebest</td>
+            <td>#SKETCH</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>47</td>
+            <td>@Hanwoo</td>
+            <td>#LION</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>38</td>
+            <td>@CRYTOBB</td>
+            <td>#efef</td>
+          </tr>
+        </tbody>
+      </Table>
+      <CardColumns>
+        <MediaCard title = "title1" subtitle = 'subtitle1' text = "lalalal" insidetext = 'toggle view' sketch = {sketch}/>
+        <MediaCard title = "title1" subtitle = 'subtitle1' sketch = {sketch}/>
+        <MediaCard title = "title1" subtitle = 'subtitle1' sketch = {sketch2}/>
+        <MediaCard title = "title1" subtitle = 'subtitle1' sketch = {sketch2}/>
+        
+      </CardColumns>
+    </div>
 
-      </div>
     );
   }
 }

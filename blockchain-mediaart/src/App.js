@@ -1,10 +1,15 @@
 import React from 'react';
-import { Main, Gallery,Gallery2, MyMediaart, Dashboard, Detail } from './components';
+
+import {Main, Gallery, MyMediaart, Dashboard, Detail } from './components';
+
+
 import {
   BrowserRouter as Router,
   Route,
   Switch
 } from "react-router-dom";
+import './App.css';
+import logo from './img/abclogo.png';
 
 // import './App.css';
 
@@ -12,12 +17,15 @@ function App() {
   return (
     <Router>
     
-      <div className="App">    
+      <div className="App">
+        <header>
+        <img src={logo} width="200" height= "120" />
+        </header> 
         <Switch>
           <Route exact path='/'>
             <Main />
           </Route>  
-          <Route exact path='/gallery'>
+          <Route exact path='/Gallery'>
             <Gallery />
           </Route>
           <Route exact path='/gallery2'>
