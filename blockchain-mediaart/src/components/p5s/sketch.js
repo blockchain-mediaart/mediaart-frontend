@@ -2,7 +2,7 @@
 
 export default function sketch(p) {
   let rotation = 0;
-  let color;
+  let color= 255;
 
   p.setup = function () {
 
