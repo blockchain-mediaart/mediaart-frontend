@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 import {Main, Gallery, MyMediaart, Dashboard, Detail } from './components';
 
@@ -26,7 +27,9 @@ function App() {
           </div>
           <div className = "metamask_login">
           <Web3ProviderConnectButton />
+          <Link to="./MyMediaart" class="btn btn-danger" className = "mypage"><strong>My page</strong></Link>
          </div>
+
         </header> 
         <Switch>
           <Route exact path='/'>

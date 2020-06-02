@@ -7,7 +7,6 @@ import sketch2 from '../p5s/sketch2';
 import sketch3 from '../p5s/sketch3';
 import "./Main.css"
 
-const TITLE = 'ABC artwork'
 
 class Main extends React.Component {
 
@@ -28,9 +27,9 @@ class Main extends React.Component {
             <Link to="./Gallery" class="btn btn-outline-success"><strong>View More</strong></Link>
           </p>
         </Jumbotron>
-        <Media>
+        <Media className="mt-1">
           <Media left top href="#">
-            <P5Wrapper sketch={sketch} />
+            <P5Wrapper sketch={sketch} className = "pic" />
           </Media>
           <Media body>
             <Media heading>
@@ -41,7 +40,7 @@ class Main extends React.Component {
         </Media>
         <Media className="mt-1">
           <Media left middle href="#">
-            <P5Wrapper sketch={sketch2} />
+            <P5Wrapper sketch={sketch2} className = "pic" />
           </Media>
             <Media body>
               <Media heading>
@@ -52,7 +51,7 @@ class Main extends React.Component {
           </Media>
           <Media className="mt-1">
             <Media left bottom href="#">
-            <P5Wrapper sketch={sketch3} />
+            <P5Wrapper sketch={sketch3} className = "pic" />
             </Media>
             <Media body>
               <Media heading>
