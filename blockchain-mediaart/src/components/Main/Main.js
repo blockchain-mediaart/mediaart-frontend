@@ -7,14 +7,14 @@ import sketch2 from '../p5s/sketch2';
 import sketch3 from '../p5s/sketch3';
 import "./Main.css"
 
-
+const TITLE = 'ABC artwork'
 
 class Main extends React.Component {
 
 
   render() {
     return (
-      <div className = 'jum'>
+      <div>
         <Jumbotron fluid color = "black" className='jumbo'>
           <h1>Hello, ARTIST!</h1>
           <p className="lead_text">Welcome to the <strong>ABC</strong>, the world full of Art with Block-Chain</p>
@@ -61,9 +61,6 @@ class Main extends React.Component {
                 media art 3
               </Media>
           </Media>
-
-
-
       </div>
     );
   }
