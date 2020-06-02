@@ -10,16 +10,25 @@ import {
 } from "react-router-dom";
 import './App.css';
 import logo from './img/abclogo.png';
+import P5withWeb3 from './components/p5s/P5WithWeb3'
+import Web3ProviderConnectButton from './components/web3s/Web3ProviderConnectButton';
+import checkEtherConnected from './components/web3s/checkEtherConnected';
 
 // import './App.css';
 
 function App() {
+
   return (
     <Router>
     
       <div className="App">
         <header>
-        <img src={logo} width="200" height= "120" />
+          <div className = "logo">
+            <img src={logo} width="200" height= "120" />
+          </div>
+        <div className = "metamask_login">
+        <Web3ProviderConnectButton />
+        </div>
         </header> 
         <Switch>
           <Route exact path='/'>

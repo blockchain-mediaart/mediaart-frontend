@@ -16,12 +16,12 @@ class Main extends React.Component {
     return (
       <div>
         <Jumbotron fluid color = "black" className='jumbo'>
-          <h1 className="display-3">Hello, ARTIST!</h1>
-          <p className="lead">Welcome to the CREATIVE GALLERY</p>
+          <h1 className="title">Hello, ARTIST!</h1>
+          <p className="lead_text">Welcome to the ABC, the world full of Art with Block-Chain</p>
           <hr className="my-2" />
-          <p>hello</p>
+          <p>The easiest way to be CREATIVE is here. Like ABC!</p>
           <p className="lead">
-            <Link to="./Gallery" className="btn btn-primary">View More</Link>
+            <Link to="./Gallery" className="btn"><strong>View More</strong></Link>
           </p>
         </Jumbotron>
         <Media>

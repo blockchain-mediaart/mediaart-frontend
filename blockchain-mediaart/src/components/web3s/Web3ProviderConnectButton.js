@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
 import { useWeb3 } from '@openzeppelin/network/react';
+import { Color } from 'p5';
 
 export default function Web3ProviderConnectButton() {
   const web3Context = useWeb3();
   return (
     <div className="provider">
-      <p>메타마스크 로그인</p>
+      <p><strong>메타마스크 로그인</strong></p>
       <Web3Data web3Context={web3Context} />
     </div>
   );
@@ -24,14 +25,16 @@ function Web3Data(props) {
 
   const requestAccess = useCallback(() => requestAuth(web3Context), []);
 
+  
+
   return (
     <div>
       <div>
-        Your address: {accounts && accounts.length ? accounts[0] : 'Unknown'}
+      <p><strong>Your address:</strong> {accounts && accounts.length ? accounts[0] : 'Unknown'}</p>
       </div>
       <div>
-        <p>Provider: {providerName}</p>
-        <p>Network : {networkName}  (id:{networkId}) </p>
+        <p><strong>Provider :</strong> {providerName}</p>
+        <p><strong>Network :</strong> {networkName}  (id:{networkId}) </p>
       </div>
 
       {accounts && accounts.length ? (
@@ -40,7 +43,7 @@ function Web3Data(props) {
         </div>
       ) : !!networkId ? (
         <div>
-          <button onClick={requestAccess}>Request Access</button>
+          <button variant="success" onClick={requestAccess}>Request Access</button>
         </div>
       ) : (
             <div></div>
