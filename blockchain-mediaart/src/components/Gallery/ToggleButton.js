@@ -8,7 +8,7 @@ const ToggleButton = (props) => {
 
   return (
     <div>
-      <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>Toggle</Button>
+      <Button className="btn btn-success" onClick={toggle} style={{ marginBottom: '1rem' }}>Info</Button>
       <Collapse isOpen={isOpen}>
         <Card>
           <CardBody>
