@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import P5Wrapper from 'react-p5-wrapper';
 import 'bootstrap/dist/css/bootstrap.css';
 import sketch0 from './sketches/sketch0.js';
@@ -19,7 +20,7 @@ import { createGitgraph } from "@gitgraph/js";
 const sketches = [sketch0, sketch1, sketch2, sketch3, sketch4, sketch5, sketch6, sketch7, sketch8, sketch9, sketch10, sketch11];
 
 class Dashboard extends React.Component {
-   constructor(props) {
+    constructor(props) {
         super(props);
         this.mediaArt = props.mediaArt;
         this.state = {
@@ -29,7 +30,6 @@ class Dashboard extends React.Component {
     }
     
     changeCommit(_commit, sketchId) {
-        console.log('>> Changed to ', _commit);
         this.setState({
             commit: _commit,
             sketch: sketches[sketchId],
@@ -39,10 +39,18 @@ class Dashboard extends React.Component {
     render(){
         return (
             <div>
-                <h1>{this.mediaArt.title} 대쉬보드</h1>
+                <h1>{this.mediaArt.title} Dashboard</h1>
+                
                 <div className="row">
                     <div className="col-md-6">
-                        <h5>{this.mediaArt.title}_{this.state.commit ? this.state.commit.hashAbbrev : 'fffffff'}</h5>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <h5>{this.mediaArt.title}_{this.state.commit ? this.state.commit.hashAbbrev : 'fffffff'}</h5>
+                            </div>
+                            <div className="col-md-6">
+                                <h5><Link to={"./mosa-lina/" + (this.state.commit ? this.state.commit.hashAbbrev : 'fffffff')}>Detail Info</Link></h5>
+                            </div>
+                        </div>
                     </div>
                     <div className="col-md-6">
                         <h5>Version Control</h5>
@@ -56,6 +64,7 @@ class Dashboard extends React.Component {
                         <div id="graph-container"></div>
                     </div>
                 </div> 
+
             </div>
         );
     }
@@ -65,6 +74,11 @@ class Dashboard extends React.Component {
         const svg = document.getElementsByTagName("svg")[0];
         svg.setAttribute("class","graph-svg");
         svg.setAttribute("viewBox","0 0 700 1200");
+    }
+
+    goToDetail(id) {
+        console.log(id);
+        this.history.push('/home');
     }
 
     initGraphContainer() {
@@ -78,7 +92,7 @@ class Dashboard extends React.Component {
             // initCommitOffsetX?: number;
             // initCommitOffsetY?: number;
             mode: "",
-            author: ' <Details>',
+            author: ' <Detail Info>',
             branchLabelOnEveryCommit: true
             // commitMessage?: string;
             // generateCommitHash?: () => Commit["hash"];
@@ -100,21 +114,21 @@ class Dashboard extends React.Component {
         // onMouseOver: commit => console.log("onMouseOver", commit),
         // onMouseOut: commit => console.log("onMouseOut", commit),
 
-        user0.commit({subject: "모자라나 모듈 생성", onClick: commit => this.changeCommit(commit, 0)});
-        user1.merge({branch: user0, commitOptions: {subject: "First Merge", onClick: commit => this.changeCommit(commit, 1)}});
-        user1.commit({subject: "윤곽선 그리기", onClick: commit => this.changeCommit(commit, 2)});
-        user1.commit({subject: "배경색 정하기", onClick: commit => this.changeCommit(commit, 3)});
+        user0.commit({subject: "모자라나 모듈 생성", onMouseOver: commit => this.changeCommit(commit, 0), onMessageClick: () => this.goToDetail(0)});
+        user1.merge({branch: user0, commitOptions: {subject: "First branch out", onMouseOver: commit => this.changeCommit(commit, 1)}});
+        user1.commit({subject: "윤곽선 그리기", onMouseOver: commit => this.changeCommit(commit, 2)});
+        user1.commit({subject: "배경색 정하기", onMouseOver: commit => this.changeCommit(commit, 3)});
          
-        user0.commit({subject: "실루엣 완성", onClick: commit => this.changeCommit(commit, 4)}).tag("v1.0.0");;
-        user2.merge({branch: user0, commitOptions: {subject: "2nd Merge", onClick: commit => this.changeCommit(commit, 5)}});
-        user0.commit({subject: "눈 그리기", onClick: commit => this.changeCommit(commit, 6)});
-        user2.commit({subject: "눈동자 색 추천", onClick: commit => this.changeCommit(commit, 7)});
+        user0.commit({subject: "실루엣 완성", onMouseOver: commit => this.changeCommit(commit, 4)}).tag("v1.0.0");;
+        user2.merge({branch: user0, commitOptions: {subject: "Second Branch out", onMouseOver: commit => this.changeCommit(commit, 5)}});
+        user0.commit({subject: "눈 그리기", onMouseOver: commit => this.changeCommit(commit, 6)});
+        user2.commit({subject: "눈동자 색 추천", onMouseOver: commit => this.changeCommit(commit, 7)});
          
-        user0.merge({branch: user2, commitOptions: {subject: "3rd Merge", onClick: commit => this.changeCommit(commit, 8)}}).tag("v1.0.1");
-        user1.commit({subject: "전체적인 다듬기", onClick: commit => this.changeCommit(commit, 9)});
+        user0.merge({branch: user2, commitOptions: {subject: "First Merge", onMouseOver: commit => this.changeCommit(commit, 8)}}).tag("v1.0.1");
+        user1.commit({subject: "전체적인 다듬기", onMouseOver: commit => this.changeCommit(commit, 9)});
         
-        user0.merge({branch: user1, commitOptions: {subject: "4th Merge", onClick: commit => this.changeCommit(commit, 10)}});
-        const branch = user0.commit({subject: "배경 테마 설정", onClick: commit => this.changeCommit(commit, 11)}).tag("v1.1.0");
+        user0.merge({branch: user1, commitOptions: {subject: "Second Merge", onMouseOver: commit => this.changeCommit(commit, 10)}});
+        const branch = user0.commit({subject: "배경 테마 설정", onMouseOver: commit => this.changeCommit(commit, 11)}).tag("v1.1.0");
         this.changeCommit(branch._graph.commits[11], 11);
     }
 }
