@@ -43,3 +43,8 @@ div.jumbo.jumbotron.jumbotron-fruid {
     text-indent: 30px;
     color: rgb(0, 209, 0);
 }
+
+.pic {
+    width: 500px;
+    height: 300px;
+}

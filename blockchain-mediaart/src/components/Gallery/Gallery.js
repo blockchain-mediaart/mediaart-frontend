@@ -6,6 +6,7 @@ import sketch from '../p5s/sketch'
 import sketch2 from '../p5s/sketch2'
 import sketch3 from '../p5s/sketch3'
 import MediaCard from './MediaCard'
+//import "./Gallery.css"
 
 class Gallery extends React.Component {
   render() {
@@ -18,7 +19,7 @@ class Gallery extends React.Component {
           <tr>
             <th>#</th>
             <th>Stars</th>
-            <th>Username</th>
+            <th>UserID</th>
             <th>Artwork</th>
           </tr>
         </thead>
