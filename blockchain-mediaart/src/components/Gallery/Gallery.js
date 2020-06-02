@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, Table, CardColumns,CardImgOverlay, CardText, CardBody, CardTitle, CardSubtitle, Button, Collapse } from 'reactstrap';
 import P5Wrapper from 'react-p5-wrapper';
@@ -50,6 +51,7 @@ class Gallery extends React.Component {
         
       </CardColumns>
     </div>
+
     );
   }
 }

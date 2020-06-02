@@ -1,5 +1,8 @@
 import React from 'react';
+
 import {Main, Gallery, MyMediaart, Dashboard, Detail } from './components';
+
+
 import {
   BrowserRouter as Router,
   Route,
@@ -25,6 +28,9 @@ function App() {
           <Route exact path='/Gallery'>
             <Gallery />
           </Route>
+          <Route exact path='/gallery2'>
+            <Gallery2 />
+          </Route>
           <Route exact path='/MyMediaart'>
             <MyMediaart />
           </Route>
@@ -32,7 +38,7 @@ function App() {
             <Detail />
           </Route>
           <Route exact path='/dashboard'>
-            <Dashboard />
+            <Dashboard mediaArt={{title: "Mosa Lina"}} />
           </Route>
           <Route path='*'>
             <h1>PAGE NOT FOUND</h1>

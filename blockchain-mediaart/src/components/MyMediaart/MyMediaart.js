@@ -1,14 +1,28 @@
 import React from 'react';
-import P5Wrapper from 'react-p5-wrapper';
 
-import sketch from '../p5s/sketch'
+import P5withWeb3 from '../p5s/P5WithWeb3'
+import Web3ProviderConnectButton from '../web3s/Web3ProviderConnectButton';
+import checkEtherConnected from '../web3s/checkEtherConnected';
 
 class MyMediaart extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    checkEtherConnected()
+  }
+
+  // connectToEthereum() {
+
+  // }
+
   render() {
     return (
       <div>
-        <div>My mediaart page</div>
-        <P5Wrapper sketch={sketch} />
+        <Web3ProviderConnectButton />
+        <P5withWeb3 />
       </div>
     );
   }
