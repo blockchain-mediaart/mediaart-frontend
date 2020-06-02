@@ -2,12 +2,18 @@
 
 export default function sketch(p) {
   let rotation = 0;
+  let color;
 
   p.setup = function () {
     p.createCanvas(1000, 600, p.WEBGL);
+    color=0;
+    
   };
 
+
   p.myCustomRedrawAccordingToNewPropsHandler = function (props) {
+
+    color = props.color;
     if (props.rotation) {
       rotation = props.rotation * Math.PI / 180;
     }
@@ -15,7 +21,9 @@ export default function sketch(p) {
 
   p.draw = function () {
     p.normalMaterial();
-    p.background(255);
+    // console.log("background color : " + backgroundColor)
+    p.background(color);
+
     p.fill(100, 200, 230);
     p.translate(240, 0, 0);
     p.push();
