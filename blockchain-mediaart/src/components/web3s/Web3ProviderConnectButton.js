@@ -43,7 +43,7 @@ function Web3Data(props) {
         </div>
       ) : !!networkId ? (
         <div>
-          <button class="btn btn-outline-warning" onClick={requestAccess}>Request Access</button>
+          <button class="btn btn-warning" onClick={requestAccess}>Request Access</button>
         </div>
       ) : (
             <div></div>
