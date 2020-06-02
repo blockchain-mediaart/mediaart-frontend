@@ -6,7 +6,7 @@ export default function Web3ProviderConnectButton() {
   const web3Context = useWeb3();
   return (
     <div className="provider">
-      <p><strong>메타마스크 로그인</strong></p>
+      <p><strong> Access with Metamask</strong></p>
       <Web3Data web3Context={web3Context} />
     </div>
   );
@@ -43,7 +43,7 @@ function Web3Data(props) {
         </div>
       ) : !!networkId ? (
         <div>
-          <button class="btn btn-warning" onClick={requestAccess}>Request Access</button>
+          <button class="btn btn-warning" onClick={requestAccess}>Login with Metamask</button>
         </div>
       ) : (
             <div></div>
