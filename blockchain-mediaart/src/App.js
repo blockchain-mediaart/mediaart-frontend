@@ -10,9 +10,7 @@ import {
 } from "react-router-dom";
 import './App.css';
 import logo from './img/abclogo.png';
-import P5withWeb3 from './components/p5s/P5WithWeb3'
 import Web3ProviderConnectButton from './components/web3s/Web3ProviderConnectButton';
-import checkEtherConnected from './components/web3s/checkEtherConnected';
 
 // import './App.css';
 
