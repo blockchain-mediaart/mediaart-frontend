@@ -8,7 +8,75 @@
 html {
     height: 100%;
 }
-/* 
-circle {
-    fill: black;
-} */
+
+table {
+  width: 100%;
+}
+
+* {
+    box-sizing: border-box;
+  }
+  
+  /* Create three columns of equal width */
+  .columns {
+    float: left;
+    width: 50%;
+    padding: 8px;
+  }
+  
+  /* Style the list */
+  .price {
+    list-style-type: none;
+    border: 1px solid #eee;
+    margin: 0;
+    padding: 0;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+  }
+  
+  /* Pricing header */
+  .price .header {
+    background-color: yellowgreen;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  .price .header1 {
+    background-color: orange;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  /* List items */
+  .price li {
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+    font-size: 13px;
+    text-align: center;
+  }
+  
+  /* Grey list item */
+  .price .grey {
+    background-color: #eee;
+    font-size: 10px;
+  }
+  
+  /* The "Sign Up" button */
+  .button {
+    border: none;
+    color: black;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+  }
+  
+  /* Change the width of the three columns to 100%
+  (to stack horizontally on small screens) */
+  @media only screen and (max-width: 600px) {
+    .columns {
+      width: 100%;
+    }
+  }

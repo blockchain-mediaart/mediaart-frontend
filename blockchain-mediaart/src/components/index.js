@@ -1,5 +1,5 @@
 import Dashboard from './Dashboard/Dashboard';
-import Detail from './Detail/Detail';
+import Detail from './Dashboard/DashboardDetail';
 import Gallery from './Gallery/Gallery';
 import Gallery2 from './Gallery/Gallery2';
 import Main from './Main/Main';

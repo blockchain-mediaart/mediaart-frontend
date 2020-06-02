@@ -26,11 +26,11 @@ function App() {
           <Route exact path='/MyMediaart'>
             <MyMediaart />
           </Route>
-          <Route exact path='/detail'>
-            <Detail />
-          </Route>
-          <Route exact path='/dashboard'>
+          <Route exact path='/mosa-lina'>
             <Dashboard mediaArt={{title: "Mosa Lina"}} />
+          </Route>
+          <Route path='/mosa-lina/'>
+            <Detail mediaArt={{title: "Mosa Lina"}} commit={{id: 9}} />
           </Route>
           <Route path='*'>
             <h1>PAGE NOT FOUND</h1>
