@@ -11,6 +11,7 @@ html {
 
 table {
   width: 100%;
+  font-size: 10pt;
 }
 
 * {
@@ -59,7 +60,7 @@ table {
   /* Grey list item */
   .price .grey {
     background-color: #eee;
-    font-size: 10px;
+    font-size: 15px;
   }
   
   /* The "Sign Up" button */
@@ -79,4 +80,9 @@ table {
     .columns {
       width: 100%;
     }
+  }
+
+  
+  .likeButton {
+    vertical-align: bottom;
   }
