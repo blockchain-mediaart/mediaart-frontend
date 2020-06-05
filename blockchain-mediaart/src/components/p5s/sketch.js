@@ -1,32 +1,37 @@
 // p5.js without react
 
-export default function sketch11(p) {
-  let rotateRate = 0.1;
+const sampleCode = "p.normalMaterial();p.fill(100, 200, 230);p.translate(0, 0, 0);p.push();p.rotateZ(p.frameCount * 0.01);p.rotateX(p.frameCount * 0.01);p.rotateY(p.frameCount * 0.01);p.cylinder(80, 80);p.pop();";
 
+export default function sketch(p) {
+  let rotation = 0;
+  let color= 255;
+  let code = sampleCode;
   p.setup = function () {
-    p.createCanvas(500, 300, p.WEBGL);
+
+    let cnv = p.createCanvas(1000, 600, p.WEBGL);
+    cnv.position();
+    color=0;
+
   };
 
-  p.draw = function () {
+  p.myCustomRedrawAccordingToNewPropsHandler = function (props) {
+    code = props.code;
+    color = props.color;
+    if (props.rotation) {
+      rotation = props.rotation * Math.PI / 180;
+    }
+
+  };
+
+  // p.draw = adder;
+  p.draw = function() {
     p.background(255);
-    p.translate(0, -125, 0);
-    p.push();
-    p.rotateY(-p.frameCount * rotateRate);
-    p.cylinder(70, 70);
-    p.pop();
 
-    p.translate(0, 200, 0);
-    p.push();
-    p.rotateY(p.frameCount * rotateRate);
-    p.cone(70, 300);
-    p.pop();
-
-    p.translate(0, 0, 0);
-    p.push();
-    p.rotateY(p.frameCount * rotateRate);
-    p.torus(70, 20);
-    p.pop();
-    // p.scale(2, 2);
-
+    try { eval(code); 
+    } catch(e) {
+      alert(e)
+      code = sampleCode;
+    }
   };
+  
 };

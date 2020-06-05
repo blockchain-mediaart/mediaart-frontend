@@ -19,7 +19,7 @@ export default function P5WithWeb3(props) {
     <div className="provider">
       <h1>My MediaArt</h1>
       {accounts && accounts.length && networkId === 3 ?
-  <P5Wrapper sketch={sketch} code = {codeInput ? codeInput : code}/>
+        <P5Wrapper sketch={sketch} code = {codeInput ? codeInput : code}/>
         : accounts && accounts.length ?
           <h4>Ropsten Testnet이 아닌 {networkName} 이더리움에 연결되어 있어 나의 미디어 아트를 불러올 수 없습니다. Ropsten Testnet으로 네트워크 설정을 변경해 주세요</h4>
           : <h4>이더리움 네트워크에 연결되지 않아 나의 미디어 아트를 불러올 수 없습니다.</h4>
