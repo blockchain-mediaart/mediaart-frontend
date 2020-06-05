@@ -14,7 +14,13 @@ class MyMediaart extends React.Component {
   constructor(props) {
     super(props);
     // this.web3Context = web3Context;
-    this.state = { value: '', code: null, accountConnected: false, codeFromSC: '' }
+    this.state = {
+      value: '',
+      code: null,
+      accountConnected: false,
+      thisAddressHasMediaart: false,
+      codeFromSC: ''
+    }
 
     this.handleChange = this.handleChange.bind(this);
     this.inputCode = this.inputCode.bind(this);
@@ -110,18 +116,31 @@ class MyMediaart extends React.Component {
   render() {
 
     const inputCode = this.inputCode();
+    const thisAddressHasMediaart = this.state.thisAddressHasMediaart;
 
     return (
       <div>
         {this.state.value}
-        <P5withWeb3 codeInput={this.state.code} />
-        {inputCode}
+        { thisAddressHasMediaart ?
+          <P5withWeb3 codeInput={this.state.code} />
+          : createMediaart()
+        }
+       
       </div>
     );
   }
-
-
 }
 
 export default MyMediaart;
 
+/// create mediaart 
+function createMediaart() {
+
+  // const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
+
+  // contract.methods.createMediaart().send()
+    
+  return (
+    <h1>당신의 계정과 연결된 미디어 아트가 없습니다</h1>
+  );
+}
