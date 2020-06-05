@@ -14,13 +14,18 @@ class MyMediaart extends React.Component {
   constructor(props) {
     super(props);
     // this.web3Context = web3Context;
-    this.state = { value: '', code: null, accountConnected: false }
+    this.state = { value: '', code: null, accountConnected: false, codeFromSC: '' }
 
     this.handleChange = this.handleChange.bind(this);
     this.inputCode = this.inputCode.bind(this);
     this.changeCode = this.changeCode.bind(this);
+    this.changeCodeBack = this.changeCodeBack.bind(this);
+    this.sendChangedCodeToSmartContract = this.sendChangedCodeToSmartContract.bind(this);
+
     this.modifyP5WhenError = this.modifyP5WhenError.bind(this);
+
     this.useWeb3Context = this.useWeb3Context.bind(this);
+
     this.getMediaartName = this.getMediaartName.bind(this);
   }
 
@@ -43,6 +48,19 @@ class MyMediaart extends React.Component {
         console.log("Res : " + rs);
         this.setState({ value: rs })
       })
+
+    /// get p5 code from smart contract
+    /*
+       contract.methods.getMediaart_p5_code(0).call()
+      .then((result) => {
+        const rs = JSON.stringify(result)
+        console.log("Res : " + rs);
+        this.setState({ 
+          code: rs,
+          codeFromSC: rs
+        })
+      })
+      */
   }
 
   useWeb3Context() {
@@ -53,11 +71,21 @@ class MyMediaart extends React.Component {
 
   /// 사용자가 P5.js 코드 입력, 수정하는 부분 
   handleChange(event) {
-    this.setState({ value: event.target.value, code: null });
+    this.setState({ value: event.target.value });
   }
 
   changeCode() {
     this.setState({ code: this.state.value });
+  }
+
+  changeCodeBack() {
+    const cd = this.state.codeFromSC;
+    this.setState({ code: cd });
+  }
+
+  sendChangedCodeToSmartContract() {
+    // mockup code
+    console.log("code to be sent : " + this.state.code);
   }
 
   modifyP5WhenError(val) {
@@ -73,10 +101,12 @@ class MyMediaart extends React.Component {
             <textarea rows="10" cols="70" value={this.state.value} onChange={this.handleChange}></textarea>
         </label>
         <button onClick={this.changeCode} > 코드 반영하기</button>
+        <button onClick={this.changeCodeBack} > 원래 미디어아트로 되돌리기</button>
+        <button onClick={this.sendChangedCodeToSmartContract} > 블록체인에 변경된 코드 기록하기</button>
       </div>
     );
   }
- 
+
   render() {
 
     const inputCode = this.inputCode();
@@ -90,7 +120,7 @@ class MyMediaart extends React.Component {
     );
   }
 
- 
+
 }
 
 export default MyMediaart;
