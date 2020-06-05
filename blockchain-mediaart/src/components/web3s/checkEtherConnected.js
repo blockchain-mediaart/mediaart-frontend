@@ -2,7 +2,7 @@ import Web3 from 'web3';
 
 import { mediarArtABI, mediaArtAddress } from './abis/mediaartABI';
 
-const provider = '';
+const provider = '1996225ed2c74de88755f84a756eaa65';
 
 export default async function checkEtherConnected() {
 
