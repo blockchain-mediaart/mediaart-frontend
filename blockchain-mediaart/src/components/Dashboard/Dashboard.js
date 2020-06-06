@@ -101,7 +101,7 @@ class Dashboard extends React.Component {
         const gitGraph = createGitgraph(graphContainer, options);
          
         // Simulate git commands with Gitgraph API.
-        const user0 = gitGraph.branch("lucetre");
+        const user0 = gitGraph.branch("Art of BlockChain");
         const user1 = gitGraph.branch("Yunny");
         const user2 = gitGraph.branch("JSKeum");
 
@@ -114,21 +114,40 @@ class Dashboard extends React.Component {
         // onMouseOver: commit => console.log("onMouseOver", commit),
         // onMouseOut: commit => console.log("onMouseOut", commit),
 
+
+        // user0.commit({subject: "모자라나 모듈 생성", onMouseOver: commit => this.changeCommit(commit, 0), onMessageClick: () => this.goToDetail(0)});
+        // user1.merge({branch: user0, commitOptions: {subject: "First branch out", onMouseOver: commit => this.changeCommit(commit, 1)}});
+        // user1.commit({subject: "윤곽선 그리기", onMouseOver: commit => this.changeCommit(commit, 2)});
+        // user1.commit({subject: "배경색 정하기", onMouseOver: commit => this.changeCommit(commit, 3)});
+         
+        // user0.commit({subject: "실루엣 완성", onMouseOver: commit => this.changeCommit(commit, 4)}).tag("v1.0.0");;
+        // user2.merge({branch: user0, commitOptions: {subject: "Second Branch out", onMouseOver: commit => this.changeCommit(commit, 5)}});
+        // user0.commit({subject: "눈 그리기", onMouseOver: commit => this.changeCommit(commit, 6)});
+        // user2.commit({subject: "눈동자 색 추천", onMouseOver: commit => this.changeCommit(commit, 7)});
+         
+        // user0.merge({branch: user2, commitOptions: {subject: "First Merge", onMouseOver: commit => this.changeCommit(commit, 8)}}).tag("v1.0.1");
+        // user1.commit({subject: "전체적인 다듬기", onMouseOver: commit => this.changeCommit(commit, 9)});
+        
+        // user0.merge({branch: user1, commitOptions: {subject: "Second Merge", onMouseOver: commit => this.changeCommit(commit, 10)}});
+        // const branch = user0.commit({subject: "배경 테마 설정", onMouseOver: commit => this.changeCommit(commit, 11)}).tag("v1.1.0");
+
+
         user0.commit({subject: "모자라나 모듈 생성", onMouseOver: commit => this.changeCommit(commit, 0), onMessageClick: () => this.goToDetail(0)});
-        user1.merge({branch: user0, commitOptions: {subject: "First branch out", onMouseOver: commit => this.changeCommit(commit, 1)}});
-        user1.commit({subject: "윤곽선 그리기", onMouseOver: commit => this.changeCommit(commit, 2)});
-        user1.commit({subject: "배경색 정하기", onMouseOver: commit => this.changeCommit(commit, 3)});
+        user0.merge({branch: user0, commitOptions: {subject: "First branch out", onMouseOver: commit => this.changeCommit(commit, 1)}});
+        user0.commit({subject: "윤곽선 그리기", onMouseOver: commit => this.changeCommit(commit, 2)});
+        user0.commit({subject: "배경색 정하기", onMouseOver: commit => this.changeCommit(commit, 3)});
          
         user0.commit({subject: "실루엣 완성", onMouseOver: commit => this.changeCommit(commit, 4)}).tag("v1.0.0");;
-        user2.merge({branch: user0, commitOptions: {subject: "Second Branch out", onMouseOver: commit => this.changeCommit(commit, 5)}});
+        user0.merge({branch: user0, commitOptions: {subject: "Second Branch out", onMouseOver: commit => this.changeCommit(commit, 5)}});
         user0.commit({subject: "눈 그리기", onMouseOver: commit => this.changeCommit(commit, 6)});
-        user2.commit({subject: "눈동자 색 추천", onMouseOver: commit => this.changeCommit(commit, 7)});
+        user0.commit({subject: "눈동자 색 추천", onMouseOver: commit => this.changeCommit(commit, 7)});
          
-        user0.merge({branch: user2, commitOptions: {subject: "First Merge", onMouseOver: commit => this.changeCommit(commit, 8)}}).tag("v1.0.1");
-        user1.commit({subject: "전체적인 다듬기", onMouseOver: commit => this.changeCommit(commit, 9)});
+        user0.merge({branch: user0, commitOptions: {subject: "First Merge", onMouseOver: commit => this.changeCommit(commit, 8)}}).tag("v1.0.1");
+        user0.commit({subject: "전체적인 다듬기", onMouseOver: commit => this.changeCommit(commit, 9)});
         
-        user0.merge({branch: user1, commitOptions: {subject: "Second Merge", onMouseOver: commit => this.changeCommit(commit, 10)}});
+        user0.merge({branch: user0, commitOptions: {subject: "Second Merge", onMouseOver: commit => this.changeCommit(commit, 10)}});
         const branch = user0.commit({subject: "배경 테마 설정", onMouseOver: commit => this.changeCommit(commit, 11)}).tag("v1.1.0");
+
         this.changeCommit(branch._graph.commits[11], 11);
     }
 }
