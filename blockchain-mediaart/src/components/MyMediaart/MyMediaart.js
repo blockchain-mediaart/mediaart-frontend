@@ -19,7 +19,8 @@ class MyMediaart extends React.Component {
       code: null,
       accountConnected: false,
       thisAddressHasMediaart: false,
-      codeFromSC: ''
+      codeFromSC: '',
+      mediaartName: ''
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -33,6 +34,9 @@ class MyMediaart extends React.Component {
     this.useWeb3Context = this.useWeb3Context.bind(this);
 
     this.getMediaartName = this.getMediaartName.bind(this);
+    this.createMediaart = this.createMediaart.bind(this);
+    this._createMediaart = this._createMediaart.bind(this);
+  
   }
 
   componentDidMount() {
@@ -45,33 +49,28 @@ class MyMediaart extends React.Component {
   }
 
   /// Web3로 블록체인 호출하는 부분
-  getMediaartName() {
+  getMediaartName(address) {
     const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
 
-    contract.methods.getMediaart(0).call()
+    // contract.methods.getMediaart_name(0).call()
+    contract.methods.get(address).call()
       .then((result) => {
-        const rs = JSON.stringify(result)
+        let rs = JSON.stringify(result)
+        // rs = rs.replace(/\\n/g, '');
+        // rs = rs.replace(/['"]+/g, '');
         console.log("Res : " + rs);
-        this.setState({ value: rs })
+        this.setState({name: rs});
+        // this.setState({ codeFromSC: rs, code: rs })
       })
-
-    /// get p5 code from smart contract
-    /*
-       contract.methods.getMediaart_p5_code(0).call()
-      .then((result) => {
-        const rs = JSON.stringify(result)
-        console.log("Res : " + rs);
-        this.setState({ 
-          code: rs,
-          codeFromSC: rs
-        })
-      })
-      */
   }
 
   useWeb3Context() {
     if (this.state.accountConnected) {
-      this.getMediaartName()
+      const address = window.web3.givenProvider.selectedAddress;
+      this.getMediaartName(address)
+
+      
+      // this.createMediaart(address);
     }
   }
 
@@ -90,8 +89,40 @@ class MyMediaart extends React.Component {
   }
 
   sendChangedCodeToSmartContract() {
-    // mockup code
-    console.log("code to be sent : " + this.state.code);
+    
+
+    const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
+    const address = window.web3.givenProvider.selectedAddress;
+ 
+    const p5ToBeSent = this.state.value.trim() // replace('/\n','/');
+    console.log("code to be sent : " + p5ToBeSent);
+
+    contract.methods.edit(address, 0, p5ToBeSent).send({from: address})
+    .then(() => {
+      this.setState({ codeFromSC: this.state.value });
+      alert("수정된 미디어아트가 블록체인에 저장되었습니다")
+    })
+  }
+
+ _createMediaart() {
+  if (this.state.accountConnected) {
+
+  const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
+  const address = window.web3.givenProvider.selectedAddress;
+  const p5 = "normalMaterial();translate(50, 0, 0);push();rotateZ(frameCount * 0.01);rotateX(frameCount * 0.01);rotateY(frameCount * 0.01);box(70, 70, 70);pop();" 
+
+  contract.methods.createMediaart("Keum_art", p5, address).send({from: address})
+  }
+ }
+  /// create mediaart 
+ createMediaart(address) {
+
+    return (
+      <div>
+      <h1>당신의 계정과 연결된 미디어 아트가 없습니다</h1>
+      <button onClick={this._createMediaart}>미디어아트 생성하기</button>
+      </div>
+    );
   }
 
   modifyP5WhenError(val) {
@@ -116,15 +147,17 @@ class MyMediaart extends React.Component {
   render() {
 
     const inputCode = this.inputCode();
+    const createMediaart = this.createMediaart();
     const thisAddressHasMediaart = this.state.thisAddressHasMediaart;
 
     return (
       <div>
-        {this.state.value}
+        {/* {this.state.value} */}
         { thisAddressHasMediaart ?
-          <P5withWeb3 codeInput={this.state.code} />
-          : createMediaart()
+          <P5withWeb3 codeInput={this.state.code} name={this.state.name}/>
+          : createMediaart
         }
+        {inputCode}
        
       </div>
     );
@@ -133,14 +166,3 @@ class MyMediaart extends React.Component {
 
 export default MyMediaart;
 
-/// create mediaart 
-function createMediaart() {
-
-  // const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
-
-  // contract.methods.createMediaart().send()
-    
-  return (
-    <h1>당신의 계정과 연결된 미디어 아트가 없습니다</h1>
-  );
-}

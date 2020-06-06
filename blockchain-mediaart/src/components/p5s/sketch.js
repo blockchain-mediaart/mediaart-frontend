@@ -20,7 +20,6 @@ export default function sketch(p) {
     if (props.rotation) {
       rotation = props.rotation * Math.PI / 180;
     }
-
   };
 
   // p.draw = adder;
