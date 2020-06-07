@@ -142,9 +142,9 @@ class MyMediaart extends React.Component {
 
       const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
       const address = window.web3.givenProvider.selectedAddress;
-      const p5 = "p.normalMaterial();p.translate(50, 0, 0);p.push();p.rotateZ(p.frameCount * 0.01);p.rotateX(p.frameCount * 0.01);p.rotateY(p.frameCount * 0.01);p.box(70, 70, 70);p.pop();"
+      const p5 = "p.translate(50, 0, 0);p.push();p.rotateZ(p.frameCount * 0.01);p.rotateX(p.frameCount * 0.01);p.rotateY(p.frameCount * 0.01);p.fill(240,30,30);p.box(70, 70, 70);p.pop();"
 
-      contract.methods.createMediaart("KEUM_art", p5, address).send({ from: address })
+      contract.methods.createMediaart("Aurora", p5, address).send({ from: address })
     }
   }
   /// create mediaart 

@@ -8,14 +8,14 @@ import ToggleButton from './ToggleButton'
 
 function MediaCard(props) {
 
-    const { title, subtitle, text, sketch, insidetext} = props;
+    const { title, subtitle, text, sketch, insidetext, code} = props;
     return (
 
 
     <div>
      
      <Card>
-        <P5Wrapper sketch={sketch} />
+        <P5Wrapper sketch={sketch} code={code} />
         <CardImgOverlay>
           <CardTitle>{title}</CardTitle>
           <CardSubtitle>{subtitle}</CardSubtitle>
