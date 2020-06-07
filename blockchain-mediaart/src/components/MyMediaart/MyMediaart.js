@@ -18,7 +18,7 @@ class MyMediaart extends React.Component {
       value: '',
       code: null,
       accountConnected: false,
-      thisAddressHasMediaart: false,
+      thisAddressHasMediaart: true,
       codeFromSC: '',
       mediaartName: ''
     }
@@ -36,7 +36,7 @@ class MyMediaart extends React.Component {
     this.getMediaartName = this.getMediaartName.bind(this);
     this.createMediaart = this.createMediaart.bind(this);
     this._createMediaart = this._createMediaart.bind(this);
-  
+
   }
 
   componentDidMount() {
@@ -55,11 +55,23 @@ class MyMediaart extends React.Component {
     // contract.methods.getMediaart_name(0).call()
     contract.methods.get(address).call()
       .then((result) => {
-        let rs = JSON.stringify(result)
-        // rs = rs.replace(/\\n/g, '');
-        // rs = rs.replace(/['"]+/g, '');
-        console.log("Res : " + rs);
-        this.setState({name: rs});
+
+        let rs = JSON.stringify(result);
+        rs = rs.replace(/[\[\]']+/g, '');
+        // rs = rs.split(',');
+        let rsAsArray = rs.match(/\w+|"[^"]+"/g);
+        console.log("Res : " + typeof rsAsArray);
+        console.log("rrrr: " + rsAsArray[1]);
+        removeDoubleQuotesFromArray(rsAsArray);
+
+
+        this.setState({
+          name: rsAsArray[0],
+          codeFromSC: rsAsArray[1],
+          code: rsAsArray[1]
+        });
+
+
         // this.setState({ codeFromSC: rs, code: rs })
       })
   }
@@ -69,7 +81,7 @@ class MyMediaart extends React.Component {
       const address = window.web3.givenProvider.selectedAddress;
       this.getMediaartName(address)
 
-      
+
       // this.createMediaart(address);
     }
   }
@@ -89,38 +101,45 @@ class MyMediaart extends React.Component {
   }
 
   sendChangedCodeToSmartContract() {
-    
+
 
     const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
     const address = window.web3.givenProvider.selectedAddress;
- 
+
     const p5ToBeSent = this.state.value.trim() // replace('/\n','/');
     console.log("code to be sent : " + p5ToBeSent);
 
-    contract.methods.edit(address, 0, p5ToBeSent).send({from: address})
-    .then(() => {
-      this.setState({ codeFromSC: this.state.value });
-      alert("수정된 미디어아트가 블록체인에 저장되었습니다")
-    })
+    contract.methods.edit(address, 0, p5ToBeSent).send({ from: address })
+      .then(() => {
+        this.setState({ codeFromSC: this.state.value });
+        alert("수정된 미디어아트가 블록체인에 저장되었습니다")
+      })
   }
 
- _createMediaart() {
-  if (this.state.accountConnected) {
+  _createMediaart() {
+    if (this.state.accountConnected) {
 
-  const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
-  const address = window.web3.givenProvider.selectedAddress;
-  const p5 = "normalMaterial();translate(50, 0, 0);push();rotateZ(frameCount * 0.01);rotateX(frameCount * 0.01);rotateY(frameCount * 0.01);box(70, 70, 70);pop();" 
+      const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
+      const address = window.web3.givenProvider.selectedAddress;
+      const p5 = "p.normalMaterial();p.translate(50, 0, 0);p.push();p.rotateZ(p.frameCount * 0.01);p.rotateX(p.frameCount * 0.01);p.rotateY(p.frameCount * 0.01);p.box(70, 70, 70);p.pop();"
 
-  contract.methods.createMediaart("Keum_art", p5, address).send({from: address})
+      contract.methods.createMediaart("KEUM_art", p5, address).send({ from: address })
+    }
   }
- }
   /// create mediaart 
- createMediaart(address) {
+  createMediaart(address) {
 
+    const nameStyle = {
+      "font-size": "3em",
+      "text-align": "center",
+    }
+    const buttonStyle = {
+      "height": "5em"
+    }
     return (
       <div>
-      <h1>당신의 계정과 연결된 미디어 아트가 없습니다</h1>
-      <button onClick={this._createMediaart}>미디어아트 생성하기</button>
+        <h1 style={nameStyle}>당신의 계정과 연결된 미디어 아트가 없습니다</h1>
+        <button style={buttonStyle} onClick={this._createMediaart}>미디어아트 생성하기</button>
       </div>
     );
   }
@@ -150,15 +169,18 @@ class MyMediaart extends React.Component {
     const createMediaart = this.createMediaart();
     const thisAddressHasMediaart = this.state.thisAddressHasMediaart;
 
+    if (thisAddressHasMediaart) {
+      return (
+        <div>
+          <P5withWeb3 codeInput={this.state.code} name={this.state.name} />
+          {inputCode}
+        </div>
+      );
+    }
+
     return (
       <div>
-        {/* {this.state.value} */}
-        { thisAddressHasMediaart ?
-          <P5withWeb3 codeInput={this.state.code} name={this.state.name}/>
-          : createMediaart
-        }
-        {inputCode}
-       
+        {createMediaart}
       </div>
     );
   }
@@ -166,3 +188,8 @@ class MyMediaart extends React.Component {
 
 export default MyMediaart;
 
+function removeDoubleQuotesFromArray(array) {
+  for (var i = 0; i < array.length; i++) {
+    array[i] = array[i].replace(/"/g, "");
+  }
+}
