@@ -7,9 +7,10 @@ export default function sketch(p) {
   let color= 255;
   let code = sampleCode;
   p.setup = function () {
-
     let cnv = p.createCanvas(1000, 600, p.WEBGL);
+    // cnv.parent("myCanvas");
     cnv.position();
+    
     color=0;
 
   };

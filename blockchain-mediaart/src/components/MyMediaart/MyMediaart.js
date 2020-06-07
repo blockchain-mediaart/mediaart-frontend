@@ -53,7 +53,7 @@ class MyMediaart extends React.Component {
     const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
 
     // contract.methods.getMediaart_name(0).call()
-    contract.methods.get(address).call()
+    try { contract.methods.get(address).call()
       .then((result) => {
 
         let rs = JSON.stringify(result);
@@ -73,7 +73,9 @@ class MyMediaart extends React.Component {
 
 
         // this.setState({ codeFromSC: rs, code: rs })
-      })
+      }) } catch(e) {
+        console.log("error with call() : "+ e)
+      }
   }
 
   useWeb3Context() {
@@ -112,7 +114,7 @@ class MyMediaart extends React.Component {
     contract.methods.edit(address, 0, p5ToBeSent).send({ from: address })
       .then(() => {
         this.setState({ codeFromSC: this.state.value });
-        alert("수정된 미디어아트가 블록체인에 저장되었습니다")
+        alert("수정된 미디어아트가 블록체인에 기록되었습니다")
       })
   }
 
@@ -150,15 +152,22 @@ class MyMediaart extends React.Component {
   }
 
   inputCode() {
+
+    const buttonStyle ={
+      "padding-bottom": "50px"
+    
+    }
     return (
       <div>
         <label>
           Name:
             <textarea rows="10" cols="70" value={this.state.value} onChange={this.handleChange}></textarea>
         </label>
+        <div style={buttonStyle}>
         <button onClick={this.changeCode} > 코드 반영하기</button>
         <button onClick={this.changeCodeBack} > 원래 미디어아트로 되돌리기</button>
-        <button onClick={this.sendChangedCodeToSmartContract} > 블록체인에 변경된 코드 기록하기</button>
+        <button style ={ {"background-color": "red" }} onClick={this.sendChangedCodeToSmartContract} > 블록체인에 변경된 코드 기록하기</button>
+        </div>
       </div>
     );
   }
