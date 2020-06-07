@@ -1,6 +1,22 @@
 import Web3 from 'web3';
 
+// import { mediarArtABI, mediaArtAddress } from './abis/mediaartABI';
+
+// const provider = '1996225ed2c74de88755f84a756eaa65';
+
 export default async function checkEtherConnected() {
+
+  // const web3 = new Web3(new Web3.providers.WebsocketProvider("wss://ropsten.infura.io/ws/v3/" + provider));
+  
+  // var contract = new web3.eth.Contract(mediarArtABI, mediaArtAddress);
+
+  // console.log("method : " + contract.methods)
+
+  // contract.methods.getMediaart_ballsize(0).call()
+  // .then(function(result) {
+  //   // console.log("result : " + JSON.stringify(result))
+  // })
+
   // Modern dapp browsers
   if (window.ethereum) {
     window.web3 = new Web3(window.ethereum);
