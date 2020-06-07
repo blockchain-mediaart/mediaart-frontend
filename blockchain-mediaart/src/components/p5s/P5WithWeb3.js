@@ -20,16 +20,13 @@ export default function P5WithWeb3(props) {
   const p5CanvasStyle= {
     "width": "80%",
     "margin": "auto",
-    // "border-style": "groove",
     "border": "1.6px groove grey",
-    // "box-shadow": "1px 1px 1px 1px grey",
     "border-radius": "8px",
-    
     "padding": "10px"
   }
 
   const nameFont = {
-    "font-size": "3em"
+    "fontSize": "3em"
   }
 
   return (
