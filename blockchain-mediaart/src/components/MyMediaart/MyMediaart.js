@@ -91,7 +91,7 @@ class MyMediaart extends React.Component {
 
           const myId = 1;
 
-          contract.methods.getreference_code(address, myId).call()
+          contract.methods.getreference_code(address, 0).call()
     .then((result) => {
       // console.log("getReference : "+eval(result))
       let p5CodeFromParent = JSON.stringify(result);

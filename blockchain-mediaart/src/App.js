@@ -21,11 +21,11 @@ function App() {
       <div className="App">
         <header>
           <div className = "logo">
-            <Link to='./'><img src={logo} width="200" height= "120" /></Link>
+            <Link to='/'><img src={logo} width="200" height= "120" /></Link>
           </div>
           <div className = "metamask_login">
           <Web3ProviderConnectButton />
-          <Link to="./MyMediaart" class="btn btn-danger" className = "mypage"><strong>My page</strong></Link>
+          <Link to="/MyMediaart" class="btn btn-danger" className = "mypage"><strong>My page</strong></Link>
          </div>
 
         </header> 
