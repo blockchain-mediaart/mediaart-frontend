@@ -49,7 +49,7 @@ class MyMediaart extends React.Component {
       this.setState({ accountConnected: true })
       this.useWeb3Context()
     })
-    console.log(window.web3.givenProvider.selectedAddress);
+    // console.log(window.web3.givenProvider.selectedAddress);
 
   }
 
@@ -60,40 +60,56 @@ class MyMediaart extends React.Component {
     // const sampleAdd = "0x450a9821B6c5ae39C4E9Ce0F94881bFDC689998D";
     try {
       contract.methods.get(address).call()
-      .then((result) => {
+        .then((result) => {
 
-        let rs = JSON.stringify(result);
+          let rs = JSON.stringify(result);
+          // console.log("mediarrt : " +rs )
 
+          rs = rs.replace(/[\[\]']+/g, '');
+          
+          // rs = rs.split(',');
+         
+          const resultLengthZero = (rs.length === 0);
+          // console.log("res : "  rs.length === 0);
 
-        rs = rs.replace(/[\[\]']+/g, '');
-        // rs = rs.split(',');
+          if (!resultLengthZero) {
+            let rsAsArray = rs.match(/\w+|"[^"]+"/g);
+            // console.log("parent : " + rsAsArray[3])
+            // console.log("Res : " + typeof rsAsArray);
+            // console.log("rrrr: " + rsAsArray);
+            removeDoubleQuotesFromArray(rsAsArray);
 
-        const resultLengthZero = (rs.length === 0);
-        // console.log("res : "  rs.length === 0);
+            this.setState({
+              name: rsAsArray[0],
+              codeFromSC: rsAsArray[1],
+              code: rsAsArray[1],
+              thisAddressHasMediaart: true
+            });
+          } else {
+            this.setState({ thisAddressHasMediaart: false })
+          }
 
-        if (!resultLengthZero) {
-          let rsAsArray = rs.match(/\w+|"[^"]+"/g);
-          // console.log("Res : " + typeof rsAsArray);
-          // console.log("rrrr: " + rsAsArray[1]);
-          removeDoubleQuotesFromArray(rsAsArray);
+          const myId = 1;
 
-          this.setState({
-            name: rsAsArray[0],
-            codeFromSC: rsAsArray[1],
-            code: rsAsArray[1],
-            thisAddressHasMediaart: true
-          });
-        } else {
-          this.setState({ thisAddressHasMediaart: false })
-        }
+          contract.methods.getreference_code(address, myId).call()
+    .then((result) => {
+      // console.log("getReference : "+eval(result))
+      let p5CodeFromParent = JSON.stringify(result);
+      p5CodeFromParent = p5CodeFromParent.replace(/[\[\]']+/g, '');
+      p5CodeFromParent = p5CodeFromParent.replace(/['"]+/g, '');
+      // console.log("type : "  + p5CodeFromParent)
+      const addParentCodeToMyCode = this.state.codeFromSC + p5CodeFromParent;
+      this.setState({code: addParentCodeToMyCode})
+    })
 
-
-        // this.setState({ codeFromSC: rs, code: rs })
-      })
+          // this.setState({ codeFromSC: rs, code: rs })
+        })
     } catch (e) {
       console.log("error with call() : " + e)
 
     }
+
+    
   }
 
   useWeb3Context() {
@@ -104,7 +120,7 @@ class MyMediaart extends React.Component {
 
       // this.createMediaart(address);
     }
-    
+
   }
 
   /// 사용자가 P5.js 코드 입력, 수정하는 부분 
@@ -123,32 +139,53 @@ class MyMediaart extends React.Component {
 
   sendChangedCodeToSmartContract() {
 
+    if (this.state.accountConnected) {
+      window.web3.eth.net.getId()
+        .then((id) => {
+          if (id === 3) {
 
-    const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
-    const address = window.web3.givenProvider.selectedAddress;
+            const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
+            const address = window.web3.givenProvider.selectedAddress;
 
-    const p5ToBeSent = this.state.value.trim() // replace('/\n','/');
-    console.log("code to be sent : " + p5ToBeSent);
+            const p5ToBeSent = this.state.value.trim() // replace('/\n','/');
+            console.log("code to be sent : " + p5ToBeSent);
 
-    contract.methods.edit(address, 0, p5ToBeSent).send({ from: address })
-      .then(() => {
-        this.setState({ codeFromSC: this.state.value });
-        alert("수정된 미디어아트가 블록체인에 기록되었습니다")
-      })
+            contract.methods.edit(address, 1, p5ToBeSent).send({ from: address })
+              .then(() => {
+                this.setState({ codeFromSC: this.state.value });
+                alert("수정된 미디어아트가 블록체인에 기록되었습니다")
+              })
+          } else { alert("Ropsten Testnet에 연결되어 있지 않습니다") }
+        }
+        )
+    }
   }
 
   _createMediaart() {
     if (this.state.accountConnected) {
+      if (this.state.accountConnected) {
+        window.web3.eth.net.getId()
+          .then((id) => {
+            if (id === 3) {
 
-      const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
-      const address = window.web3.givenProvider.selectedAddress;
-      const p5 = "p.translate(50, 0, 0);p.push();p.rotateZ(p.frameCount * 0.01);p.rotateX(p.frameCount * 0.01);p.rotateY(p.frameCount * 0.01);p.fill(240,30,30);p.box(70, 70, 70);p.pop();"
+              const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
+              const address = window.web3.givenProvider.selectedAddress;
+              const p5 = "p.translate(50, 0, 0);p.push();p.rotateZ(p.frameCount * 0.01);p.rotateX(p.frameCount * 0.01);p.rotateY(p.frameCount * 0.01);p.fill(240,30,30);p.box(70, 70, 70);p.pop();"
 
-      contract.methods.createMediaart("Aurora", p5, address).send({ from: address })
+              contract.methods.createMediaart("Aurora", p5, address).send({ from: address })
+            }
+          }
+          )
+      }
+
     }
   }
   /// create mediaart 
   createMediaart(address) {
+    // if (this.state.accountConnected) {
+    //   window.web3.eth.net.getId()
+    //     .then((id) => {
+    //       if (id === 3) {
 
     const createStyle = {
       "font-size": "3em",
@@ -166,6 +203,11 @@ class MyMediaart extends React.Component {
         <button style={buttonStyle} onClick={this._createMediaart}>미디어아트 생성하기</button>
       </div>
     );
+    //       }
+    //     }
+    //     )
+    // }
+
   }
 
   modifyP5WhenError(val) {
@@ -194,6 +236,8 @@ class MyMediaart extends React.Component {
     const buttonFont = {
       "fontSize": "1.6em"
     }
+
+    // this.setState({networkId: 3})
     return (
       <div style={inputStyle}>
         <div>
@@ -204,10 +248,10 @@ class MyMediaart extends React.Component {
             <p>
               p.fill(255, 20, 20);
               p.rect(100, 100, 100);
- </p>
+       </p>
           </div>
           {/* <label>
-          Name: */}
+                Name: */}
           <textarea style={{ "padding": "0" }} rows="10" cols="80" value={this.state.value} onChange={this.handleChange}></textarea>
           {/* </label> */}
         </div>
@@ -220,26 +264,21 @@ class MyMediaart extends React.Component {
     );
   }
 
-  // handleNetworkId = (networkIdValue) => {
-  //   this.setState({ networkId: networkIdValue });
-  //   console.log("123ff : " + this.state.networkId)
-  // }
-
   checkNetWorkId() {
 
     if (this.state.accountConnected) {
       window.web3.eth.net.getId()
-      .then((rs) => {
-        console.log("12313 : "+ rs)
-        if (rs != this.state.networkId) {
-        this.setState({networkId: rs})
+        .then((rs) => {
+          console.log("12313 : " + rs)
+          if (rs != this.state.networkId) {
+            this.setState({ networkId: rs })
 
-        return rs ;
+            return rs;
 
-        }
-      })
+          }
+        })
     }
-    
+
   }
 
   render() {
@@ -252,19 +291,20 @@ class MyMediaart extends React.Component {
       return (
         <div>
           {/* {this.checkNetWorkId()}  */}
-          <P5withWeb3 codeInput={this.state.code} name={this.state.name}/>
+          <P5withWeb3 codeInput={this.state.code} name={this.state.name} />
           {inputCode}
         </div>
       );
-    } else  {
+    } else {
 
       return (
         <div>
-        {/* {this.checkNetWorkId()} */}
+          {/* {this.checkNetWorkId()} */}
+          <P5withWeb3 codeInput={this.state.code} name={this.state.name} />
           {createMediaart}
         </div>
       );
-    } 
+    }
     // else {
     //   <P5withWeb3 codeInput={this.state.code} name={this.state.name}/>
     // }

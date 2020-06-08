@@ -1,40 +1,122 @@
 import React from 'react';
 import P5Wrapper from 'react-p5-wrapper';
+import Web3 from 'web3';
 import 'bootstrap/dist/css/bootstrap.css';
-import sketch0 from './sketches/sketch0.js';
-import sketch1 from './sketches/sketch1.js';
-import sketch2 from './sketches/sketch2.js';
-import sketch3 from './sketches/sketch3.js';
-import sketch4 from './sketches/sketch4.js';
-import sketch5 from './sketches/sketch5.js';
-import sketch6 from './sketches/sketch6.js';
-import sketch7 from './sketches/sketch7.js';
-import sketch8 from './sketches/sketch8.js';
-import sketch9 from './sketches/sketch9.js';
-import sketch10 from './sketches/sketch10.js';
-import sketch11 from './sketches/sketch11.js';
+
+// import sketch0 from './sketches/sketch0.js';
+// import sketch1 from './sketches/sketch1.js';
+// import sketch2 from './sketches/sketch2.js';
+// import sketch3 from './sketches/sketch3.js';
+// import sketch4 from './sketches/sketch4.js';
+// import sketch5 from './sketches/sketch5.js';
+// import sketch6 from './sketches/sketch6.js';
+// import sketch7 from './sketches/sketch7.js';
+// import sketch8 from './sketches/sketch8.js';
+// import sketch9 from './sketches/sketch9.js';
+// import sketch10 from './sketches/sketch10.js';
+// import sketch11 from './sketches/sketch11.js';
+import checkEtherConnected from '../web3s/checkEtherConnected';
+import sketchWithSmartContract from './sketches/sketchWtihSmartContract';
 import './Dashboard.css';
-const sketches = [sketch0, sketch1, sketch2, sketch3, sketch4, sketch5, sketch6, sketch7, sketch8, sketch9, sketch10, sketch11];
+import {mediarArtABI, mediaArtAddress} from '../web3s/abis/mediaartABI';
+
+// const sketches = [sketch0, sketch1, sketch2, sketch3, sketch4, sketch5, sketch6, sketch7, sketch8, sketch9, sketch10, sketch11];
 
 class Detail extends React.Component {
 
   constructor(props) {
     super(props);
 
+    const id = this.props.match.params.mediaartId
+
+    // console.log("props : " +id)
     this.state = {
       thumbsUp: false,
       referCnt: 5,
       buyCnt: 19,
+      mediaartId: id,
+      mediaartName: "",
+      p5Code: "",
+      accountConnected: false
     }
   }
 
+  componentDidMount() {
 
+    checkEtherConnected().then(() => {
+      this.setState({ accountConnected: true })
+    })
+
+    const web3 = new Web3(new Web3.providers.WebsocketProvider("wss://ropsten.infura.io/ws/v3/1996225ed2c74de88755f84a756eaa65"));
+    const contract = new web3.eth.Contract(mediarArtABI, mediaArtAddress);
+    console.log(123131233)
+    try {
+      contract.methods.getMediaart(this.state.mediaartId).call()
+        .then((result) => {
+          let rs = JSON.stringify(result);
+  
+          rs = rs.replace(/[\[\]']+/g, '');
+          // rs = rs.split(',');
+
+          const resultLengthZero = (rs.length === 0);
+          // console.log("res : "  rs.length === 0);
+
+          if (!resultLengthZero) {
+            let rsAsArray = rs.match(/\w+|"[^"]+"/g);
+            // console.log("Res : " + typeof rsAsArray);
+            // console.log("rrrr: " + eval(rsAsArray[3]));
+            removeDoubleQuotesFromArray(rsAsArray);
+
+            this.setState({
+              name: rsAsArray[1],
+              p5Code: rsAsArray[3]
+            });
+          } 
+          else {
+            alert("미디어 아트를 찾을 수 없습니다")
+          }
+
+    })
+  } catch(e) {
+    alert("문제가 발생하여 미디어아트 정보를 불러올 수 없습니다")
+  }
+
+  }
+
+
+
+  
   changeThumbsUp(){
     this.setState({thumbsUp: !this.state.thumbsUp})
   }
 
   addReference(){
     this.setState({referCnt: this.state.referCnt+1})
+
+    if (this.state.accountConnected) {
+      window.web3.eth.net.getId()
+        .then((id) => {
+          if (id === 3) {
+
+    const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
+    const address = window.web3.givenProvider.selectedAddress;
+
+    const p5ToBeSent = this.state.p5Code.trim()
+    // console.log("p5tobesent :" + p5ToBeSent) // replace('/\n','/');
+    // console.log("code to be sent : " + p5ToBeSent);
+    const parentId = this.state.mediaartId;
+    const childId = 1;
+    contract.methods.ReferMediaart(parentId, childId).send({ from: address })
+      .then(() => {
+        alert("미디어 아트 참조에 성공했습니다")
+      }) 
+          } else {alert("Ropsten Testnet에 연결되어 있지 않습니다")}
+        }
+        )
+    } else {
+      checkEtherConnected()
+    }
+
   }
 
   addPurchase(){
@@ -47,8 +129,8 @@ class Detail extends React.Component {
       return (
           <div>
             <td>
-            <a href="./" class="previous">&laquo; {this.props.mediaArt.title} Dashboard</a>
-            <h1>{this.props.mediaArt.title}_55eacc1</h1></td>
+            <a href="./" class="previous">&laquo; {this.props.location.title} Dashboard</a>
+            <h1>{this.props.location.title}</h1></td> 
             <td className="likeButton"> &nbsp;&nbsp;
             <button type="button" className={className} onClick={this.changeThumbsUp.bind(this)}>
               <svg class="bi bi-hand-thumbs-up" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -56,16 +138,17 @@ class Detail extends React.Component {
               </svg>
               &nbsp;<b>Like</b>
             </button></td>
-            <button type="button" className="btn btn-default">소유자: lucetre</button>
-            <button type="button" className="btn btn-default">조회수: 1620회</button>
+            {/* <button type="button" className="btn btn-default">소유자: {this.state.name}</button> */}
+            <button type="button" className="btn btn-default">조회수: 0회</button>
             <button type="button" className="btn btn-default">좋아요: {432 + (this.state.thumbsUp?1:0)}개</button>
-            <button type="button" className="btn btn-default">판매량: {this.state.buyCnt}점</button>
+            {/* <button type="button" className="btn btn-default">판매량: {this.state.buyCnt}점</button> */}
             <button type="button" className="btn btn-default">참조횟수: {this.state.referCnt}회</button>
             <hr />
             
             <div className="row">
-              <div className="col-md-7">
-                <P5Wrapper sketch={sketches[this.props.commit.id]} />
+              <div className="col-md-7"> 
+                {/* <P5Wrapper sketch={sketches[this.props.commit.id]} /> */}
+                <P5Wrapper sketch={sketchWithSmartContract} code={this.state.p5Code}/>
               </div>
               <div className="col-md-5">
           
@@ -124,9 +207,12 @@ class Detail extends React.Component {
           </div>
       );
   }
-
-  componentDidMount() {
-  }
 }
 
 export default Detail;
+
+function removeDoubleQuotesFromArray(array) {
+  for (var i = 0; i < array.length; i++) {
+    array[i] = array[i].replace(/"/g, "");
+  }
+}

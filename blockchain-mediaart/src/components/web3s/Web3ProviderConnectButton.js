@@ -39,7 +39,7 @@ function Web3Data(props) {
 
       {accounts && accounts.length ? (
         <div>
-          {networkName} 이더리움에 연결되었습니다
+          {/* {networkName} 이더리움에 연결되었습니다 */}
         </div>
       ) : !!networkId ? (
         <div>
