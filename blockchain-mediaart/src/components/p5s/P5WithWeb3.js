@@ -23,7 +23,8 @@ export default function P5WithWeb3(props) {
   }
 
   const p5CanvasStyle= {
-    "width": "80%",
+    "width": "60%",
+
     "margin": "auto",
     "border": "1.6px groove grey",
     "border-radius": "8px",

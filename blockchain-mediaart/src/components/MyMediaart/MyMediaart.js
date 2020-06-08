@@ -9,8 +9,6 @@ import { mediarArtABI, mediaArtAddress } from '../web3s/abis/mediaartABI';
 
 // const web3Context = useWeb3();
 
-
-
 class MyMediaart extends React.Component {
 
   constructor(props) {
@@ -66,23 +64,26 @@ class MyMediaart extends React.Component {
           // console.log("mediarrt : " +rs )
 
           rs = rs.replace(/[\[\]']+/g, '');
-          
+
           // rs = rs.split(',');
-         
+
           const resultLengthZero = (rs.length === 0);
           // console.log("res : "  rs.length === 0);
 
           if (!resultLengthZero) {
             let rsAsArray = rs.match(/\w+|"[^"]+"/g);
-            // console.log("parent : " + rsAsArray[3])
-            // console.log("Res : " + typeof rsAsArray);
-            // console.log("rrrr: " + rsAsArray);
+
             removeDoubleQuotesFromArray(rsAsArray);
+            // console.log("12313 :" + rsAsArray[1])
+            let code = rsAsArray[1];
+            code = code.replace(/\s/g, '');
+            code = code.replace(new RegExp("\\\\n", "g"), "");
+            // console.log(code);
 
             this.setState({
               name: rsAsArray[0],
-              codeFromSC: rsAsArray[1],
-              code: rsAsArray[1],
+              codeFromSC: code,
+              code: code,
               thisAddressHasMediaart: true
             });
           } else {
@@ -91,16 +92,20 @@ class MyMediaart extends React.Component {
 
           const myId = 1;
 
-          contract.methods.getreference_code(address, 0).call()
-    .then((result) => {
-      // console.log("getReference : "+eval(result))
-      let p5CodeFromParent = JSON.stringify(result);
-      p5CodeFromParent = p5CodeFromParent.replace(/[\[\]']+/g, '');
-      p5CodeFromParent = p5CodeFromParent.replace(/['"]+/g, '');
-      // console.log("type : "  + p5CodeFromParent)
-      const addParentCodeToMyCode = this.state.codeFromSC + p5CodeFromParent;
-      this.setState({code: addParentCodeToMyCode})
-    })
+          contract.methods.getreference_code(address, 1).call()
+            .then((result) => {
+              console.log("getReference : "+eval(result))
+              let p5CodeFromParent = JSON.stringify(result);
+              p5CodeFromParent = p5CodeFromParent.replace(/[\[\]']+/g, '');
+              p5CodeFromParent = p5CodeFromParent.replace(/['"]+/g, '');
+              // console.log("type : "  + p5CodeFromParent)
+
+              p5CodeFromParent = p5CodeFromParent.replace(/\s/g, '');
+              p5CodeFromParent = p5CodeFromParent.replace(new RegExp("\\\\n", "g"), "");
+             
+              const addParentCodeToMyCode = this.state.codeFromSC + p5CodeFromParent;
+              this.setState({ code: addParentCodeToMyCode })
+            })
 
           // this.setState({ codeFromSC: rs, code: rs })
         })
@@ -109,7 +114,7 @@ class MyMediaart extends React.Component {
 
     }
 
-    
+
   }
 
   useWeb3Context() {
@@ -147,7 +152,9 @@ class MyMediaart extends React.Component {
             const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
             const address = window.web3.givenProvider.selectedAddress;
 
-            const p5ToBeSent = this.state.value.trim() // replace('/\n','/');
+            let p5ToBeSent = this.state.value.trim() // replace('/\n','/');
+            p5ToBeSent = p5ToBeSent.replace(/\s/g, '');
+            p5ToBeSent = p5ToBeSent.replace(new RegExp("\\\\n", "g"), "");
             console.log("code to be sent : " + p5ToBeSent);
 
             contract.methods.edit(address, 1, p5ToBeSent).send({ from: address })
