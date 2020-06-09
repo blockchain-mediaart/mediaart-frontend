@@ -21,7 +21,8 @@ class MyMediaart extends React.Component {
       thisAddressHasMediaart: false,
       codeFromSC: '',
       mediaartName: '',
-      networkId: -1
+      networkId: -1,
+      nameToBeCreated: "Media art name"
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,7 +39,9 @@ class MyMediaart extends React.Component {
     this.createMediaart = this.createMediaart.bind(this);
     this._createMediaart = this._createMediaart.bind(this);
     this.checkNetWorkId = this.checkNetWorkId.bind(this);
-
+    
+    this.nameHandler = this.nameHandler.bind(this);
+    this.nameInput = this.nameInput.bind(this);
   }
 
   componentDidMount() {
@@ -121,11 +124,21 @@ class MyMediaart extends React.Component {
     if (this.state.accountConnected) {
       const address = window.web3.givenProvider.selectedAddress;
       this.getMediaartName(address)
-
-
-      // this.createMediaart(address);
     }
+  }
 
+  nameHandler(event) {
+    this.setState({ nameToBeCreated: event.target.value });
+  }
+
+  nameInput() {
+    return (      
+      <div>
+        <label>Name: </label>
+      <input type="text" style={{"marginBottom": "30px"}}value={this.state.nameToBeCreated} onChange={this.nameHandler}></input>
+      </div>
+    )
+    
   }
 
   /// 사용자가 P5.js 코드 입력, 수정하는 부분 
@@ -151,13 +164,14 @@ class MyMediaart extends React.Component {
 
             const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
             const address = window.web3.givenProvider.selectedAddress;
+            const myMediaartId = 2;
 
             let p5ToBeSent = this.state.value.trim() // replace('/\n','/');
             p5ToBeSent = p5ToBeSent.replace(/\s/g, '');
             p5ToBeSent = p5ToBeSent.replace(new RegExp("\\\\n", "g"), "");
             console.log("code to be sent : " + p5ToBeSent);
-
-            contract.methods.edit(address, 1, p5ToBeSent).send({ from: address })
+            
+            contract.methods.edit(address, myMediaartId, p5ToBeSent).send({ from: address })
               .then(() => {
                 this.setState({ codeFromSC: this.state.value });
                 alert("수정된 미디어아트가 블록체인에 기록되었습니다")
@@ -169,7 +183,7 @@ class MyMediaart extends React.Component {
   }
 
   _createMediaart() {
-    if (this.state.accountConnected) {
+    
       if (this.state.accountConnected) {
         window.web3.eth.net.getId()
           .then((id) => {
@@ -177,15 +191,15 @@ class MyMediaart extends React.Component {
 
               const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
               const address = window.web3.givenProvider.selectedAddress;
-              const p5 = "p.translate(50, 0, 0);p.push();p.rotateZ(p.frameCount * 0.01);p.rotateX(p.frameCount * 0.01);p.rotateY(p.frameCount * 0.01);p.fill(240,30,30);p.box(70, 70, 70);p.pop();"
-
-              contract.methods.createMediaart("Aurora", p5, address).send({ from: address })
+              const p5 = "p.translate(150, 0, 0);p.push();p.rotateZ(p.frameCount * 0.01);p.rotateX(p.frameCount * 0.01);p.rotateY(p.frameCount * 0.01);p.fill(30,10,230);p.box(80, 80, 80);p.pop();"
+              const name = this.state.nameToBeCreated;
+              contract.methods.createMediaart(name, p5, address).send({ from: address })
             }
           }
           )
+      } else {
+        checkEtherConnected()
       }
-
-    }
   }
   /// create mediaart 
   createMediaart(address) {
@@ -207,6 +221,7 @@ class MyMediaart extends React.Component {
     return (
       <div style={createStyle}>
         <h1 style={{ "text-align": "center", "margin-bottom": "30px" }} >당신의 계정과 연결된 미디어 아트가 없습니다</h1>
+        {this.nameInput()}
         <button style={buttonStyle} onClick={this._createMediaart}>미디어아트 생성하기</button>
       </div>
     );
@@ -250,7 +265,7 @@ class MyMediaart extends React.Component {
         <div>
           <div style={explainStyle}>
             <h4>오른쪽 입력 창에 p5.js 코드를 작성해 나만의 미디어아트를 만들어 블록체인에 기록해 봐요!</h4>
-            <h4><a style={aColor} href="https://p5js.org/examples/form-shape-primitives.html">p5 사용법 보기</a></h4>
+            <h4><a target="_blank" style={aColor} href="https://p5js.org/examples/form-shape-primitives.html">p5 사용법 보기</a></h4>
             <p><strong>* 빨간 사각형 예시 ('p.'를 앞에 붙이야 합니다')</strong></p>
             <p>
               p.fill(255, 20, 20);
@@ -279,9 +294,7 @@ class MyMediaart extends React.Component {
           console.log("12313 : " + rs)
           if (rs != this.state.networkId) {
             this.setState({ networkId: rs })
-
             return rs;
-
           }
         })
     }
@@ -293,6 +306,7 @@ class MyMediaart extends React.Component {
     const inputCode = this.inputCode();
     const createMediaart = this.createMediaart();
     const thisAddressHasMediaart = this.state.thisAddressHasMediaart;
+    const accountConnected = this.state.accountConnected;
 
     if (thisAddressHasMediaart) {
       return (
@@ -302,15 +316,17 @@ class MyMediaart extends React.Component {
           {inputCode}
         </div>
       );
-    } else {
-
+    } else if (accountConnected) {
       return (
         <div>
           {/* {this.checkNetWorkId()} */}
-          <P5withWeb3 codeInput={this.state.code} name={this.state.name} />
           {createMediaart}
+          <P5withWeb3 codeInput={this.state.code} name={this.state.name} />
         </div>
       );
+    } 
+    else {
+      return ("")
     }
     // else {
     //   <P5withWeb3 codeInput={this.state.code} name={this.state.name}/>
