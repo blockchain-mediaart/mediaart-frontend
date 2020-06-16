@@ -3,24 +3,10 @@ import P5Wrapper from 'react-p5-wrapper';
 import Web3 from 'web3';
 import 'bootstrap/dist/css/bootstrap.css';
 
-// import sketch0 from './sketches/sketch0.js';
-// import sketch1 from './sketches/sketch1.js';
-// import sketch2 from './sketches/sketch2.js';
-// import sketch3 from './sketches/sketch3.js';
-// import sketch4 from './sketches/sketch4.js';
-// import sketch5 from './sketches/sketch5.js';
-// import sketch6 from './sketches/sketch6.js';
-// import sketch7 from './sketches/sketch7.js';
-// import sketch8 from './sketches/sketch8.js';
-// import sketch9 from './sketches/sketch9.js';
-// import sketch10 from './sketches/sketch10.js';
-// import sketch11 from './sketches/sketch11.js';
 import checkEtherConnected from '../web3s/checkEtherConnected';
 import sketchWithSmartContract from './sketches/sketchWtihSmartContract';
 import './Dashboard.css';
 import { mediarArtABI, mediaArtAddress } from '../web3s/abis/mediaartABI';
-
-// const sketches = [sketch0, sketch1, sketch2, sketch3, sketch4, sketch5, sketch6, sketch7, sketch8, sketch9, sketch10, sketch11];
 
 class Detail extends React.Component {
 
@@ -70,7 +56,6 @@ class Detail extends React.Component {
             code = code.replace(/\s/g, '');
             code = code.replace(new RegExp("\\\\n", "g"), "");
            
-
             this.setState({
               name: rsAsArray[1],
               p5Code: code
@@ -100,7 +85,7 @@ class Detail extends React.Component {
       window.web3.eth.net.getId()
         .then((id) => {
           if (id === 3) {
-            console.log(124124141414)
+            // console.log(124124141414)
             const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
             const address = window.web3.givenProvider.selectedAddress;
             const mediaartId = this.state.mediaartId;
@@ -122,12 +107,14 @@ class Detail extends React.Component {
   }
 
   addReference() {
-    this.setState({ referCnt: this.state.referCnt + 1 })
+
 
     if (this.state.accountConnected) {
       window.web3.eth.net.getId()
         .then((id) => {
           if (id === 3) {
+
+
 
             const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
             const address = window.web3.givenProvider.selectedAddress;
@@ -136,10 +123,11 @@ class Detail extends React.Component {
             // console.log("p5tobesent :" + p5ToBeSent) // replace('/\n','/');
             // console.log("code to be sent : " + p5ToBeSent);
             const parentId = this.state.mediaartId;
-            const childId = 2;
-            contract.methods.ReferMediaart(parentId, childId).send({ from: address })
+            const ZeroPointOneEtherToWei = 100000000000000000;
+            contract.methods.ReferMediaart(parentId, address).send({ from: address, value: ZeroPointOneEtherToWei  })
               .then(() => {
                 alert("미디어 아트 참조에 성공했습니다")
+                this.setState({ referCnt: this.state.referCnt + 1 })
               })
           } else { alert("Ropsten Testnet에 연결되어 있지 않습니다") }
         }
@@ -154,7 +142,35 @@ class Detail extends React.Component {
   }
 
   addPurchase() {
-    this.setState({ buyCnt: this.state.buyCnt + 1 })
+    // this.setState({ buyCnt: this.state.buyCnt + 1 })
+
+    // if (this.state.accountConnected) {
+    //   window.web3.eth.net.getId()
+    //     .then((id) => {
+    //       if (id === 3) {
+
+    //         const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
+    //         const address = window.web3.givenProvider.selectedAddress;
+
+    //         // console.log("p5tobesent :" + p5ToBeSent) // replace('/\n','/');
+    //         // console.log("code to be sent : " + p5ToBeSent);
+    //         const idToBeSold = this.state.mediaartId;
+
+    //         contract.methods.transfer(address, idToBeSold).send({ from: address })
+    //           .then(() => {
+    //             alert("미디어 아트 구매에 성공했습니다")
+    //             // this.setState({ referCnt: this.state.referCnt + 1 })
+    //           })
+    //       } else { alert("Ropsten Testnet에 연결되어 있지 않습니다") }
+    //     }
+    //     )
+    // } else {
+    //   checkEtherConnected()
+    //     .then(() => {
+    //       this.setState({ accountConnected: true })
+    //     })
+    // }
+    // 
   }
 
   render() {
@@ -163,7 +179,7 @@ class Detail extends React.Component {
     return (
       <div>
         <td>
-          <a href="./" class="previous">&laquo; {this.props.location.title} Dashboard</a>
+          {/* <a href="./" class="previous">&laquo; {this.props.location.title} Dashboard</a> */}
           <h1>{this.props.location.title}</h1></td>
         <td className="likeButton"> &nbsp;&nbsp;
             <button type="button" className={className} onClick={this.changeThumbsUp}>
@@ -173,10 +189,10 @@ class Detail extends React.Component {
               &nbsp;<b>Like</b>
           </button></td>
         {/* <button type="button" className="btn btn-default">소유자: {this.state.name}</button> */}
-        <button type="button" className="btn btn-default">조회수: 0회</button>
+        {/* <button type="button" className="btn btn-default">조회수: 0회</button> */}
         <button type="button" className="btn btn-default">좋아요: {this.state.likes}개</button>
         {/* <button type="button" className="btn btn-default">판매량: {this.state.buyCnt}점</button> */}
-        <button type="button" className="btn btn-default">참조횟수: {this.state.referCnt}회</button>
+        {/* <button type="button" className="btn btn-default">참조횟수: {this.state.referCnt}회</button> */}
         <hr />
 
         <div className="row">
@@ -190,9 +206,9 @@ class Detail extends React.Component {
               <div className="columns">
                 <ul className="price">
                   <li className="header">Participant</li>
-                  <li>현 작품에 참여할 수 있습니다.</li>
+                  <li>이 작품을 참조할 수 있습니다.</li>
                   <li>본인의 기여도에 따른 수익을 창출할 수 있습니다.</li>
-                  <li className="grey"><a href="#" className="btn btn-primary" onClick={this.addReference.bind(this)}>0.09 ETH로 참조</a></li>
+                  <li className="grey"><a href="#" className="btn btn-primary" onClick={this.addReference.bind(this)}>0.1 ETH로 참조</a></li>
                 </ul>
               </div>
               <div className="columns">
@@ -200,7 +216,7 @@ class Detail extends React.Component {
                   <li className="header1">Buyer</li>
                   <li>작품을 영구 소장할 수 있습니다.</li>
                   <li>모든 확장자를 통해 작품의 export를 지원합니다.</li>
-                  <li className="grey"><a href="#" className="btn btn-primary" onClick={this.addPurchase.bind(this)}>0.15 ETH로 구매</a></li>
+                  <li className="grey"><a href="#" className="btn btn-primary" onClick={this.addPurchase.bind(this)}>0.5 ETH로 구매</a></li>
                 </ul>
               </div>
             </div>

@@ -22,7 +22,8 @@ class MyMediaart extends React.Component {
       codeFromSC: '',
       mediaartName: '',
       networkId: -1,
-      nameToBeCreated: "Media art name"
+      nameToBeCreated: "Media art name",
+      myId: -1
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -64,21 +65,23 @@ class MyMediaart extends React.Component {
         .then((result) => {
 
           let rs = JSON.stringify(result);
-          // console.log("mediarrt : " +rs )
+          console.log("mediarrt : " +rs )
 
           rs = rs.replace(/[\[\]']+/g, '');
 
           // rs = rs.split(',');
-
+          console.log("rs : " + rs)
           const resultLengthZero = (rs.length === 0);
-          // console.log("res : "  rs.length === 0);
+          console.log("res : " + !resultLengthZero);
 
           if (!resultLengthZero) {
             let rsAsArray = rs.match(/\w+|"[^"]+"/g);
 
             removeDoubleQuotesFromArray(rsAsArray);
+            
             // console.log("12313 :" + rsAsArray[1])
             let code = rsAsArray[1];
+            code = code.replace("let", "let\xa0")
             code = code.replace(/\s/g, '');
             code = code.replace(new RegExp("\\\\n", "g"), "");
             // console.log(code);
@@ -92,10 +95,17 @@ class MyMediaart extends React.Component {
           } else {
             this.setState({ thisAddressHasMediaart: false })
           }
+          
+        })
 
-          const myId = 1;
+        contract.methods.getMyId(address).call()
+        .then((result) => {
+          console.log("id : " + result);
+          const myId = result;
+          
+          this.setState({myId: myId});
 
-          contract.methods.getreference_code(address, 1).call()
+          contract.methods.getreference_code(address, myId).call()
             .then((result) => {
               console.log("getReference : "+eval(result))
               let p5CodeFromParent = JSON.stringify(result);
@@ -111,7 +121,9 @@ class MyMediaart extends React.Component {
             })
 
           // this.setState({ codeFromSC: rs, code: rs })
+
         })
+
     } catch (e) {
       console.log("error with call() : " + e)
 
@@ -164,7 +176,7 @@ class MyMediaart extends React.Component {
 
             const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
             const address = window.web3.givenProvider.selectedAddress;
-            const myMediaartId = 2;
+            const myMediaartId = this.state.myId;
 
             let p5ToBeSent = this.state.value.trim() // replace('/\n','/');
             p5ToBeSent = p5ToBeSent.replace(/\s/g, '');
@@ -191,13 +203,18 @@ class MyMediaart extends React.Component {
 
               const contract = new window.web3.eth.Contract(mediarArtABI, mediaArtAddress);
               const address = window.web3.givenProvider.selectedAddress;
-              const p5 = "p.translate(150, 0, 0);p.push();p.rotateZ(p.frameCount * 0.01);p.rotateX(p.frameCount * 0.01);p.rotateY(p.frameCount * 0.01);p.fill(30,10,230);p.box(80, 80, 80);p.pop();"
+
+              const randomRed = String(parseInt(Math.random()*255));
+              const randomSize = String(parseInt(Math.random()*100) + 100); 
+              const randomBoxSize = randomSize + "," + randomSize + "," + randomSize;
+              const p5 = "p.push();p.rotateZ(p.frameCount * 0.01);p.rotateX(p.frameCount * 0.01);p.rotateY(p.frameCount * 0.01);p.fill( " + randomRed +",10,80);p.box(" + randomBoxSize + ");p.pop();"
               const name = this.state.nameToBeCreated;
               contract.methods.createMediaart(name, p5, address).send({ from: address })
-            }
+            } else { alert("Ropsten Testnet에 연결되어 있지 않습니다") }
           }
           )
       } else {
+        
         checkEtherConnected()
       }
   }
@@ -207,7 +224,7 @@ class MyMediaart extends React.Component {
     //   window.web3.eth.net.getId()
     //     .then((id) => {
     //       if (id === 3) {
-
+    
     const createStyle = {
       "font-size": "3em",
       "padding-top": "120px",
@@ -246,11 +263,10 @@ class MyMediaart extends React.Component {
       "paddingBottom": "50px"
     }
     const explainStyle = {
-      "float": "left",
-      "marginLeft": "8em",
-      "marginRight": '0px',
+      // "float": "left",
+      "margin": "auto",
       "padding": "0px",
-      "width": "40%"
+      "width": "46%"
     }
     const aColor = {
       "color": "#00D100"
@@ -264,7 +280,7 @@ class MyMediaart extends React.Component {
       <div style={inputStyle}>
         <div>
           <div style={explainStyle}>
-            <h4>오른쪽 입력 창에 p5.js 코드를 작성해 나만의 미디어아트를 만들어 블록체인에 기록해 봐요!</h4>
+            <h4>아래 입력 창에 p5.js 코드를 작성해 나만의 미디어아트를 만들어 블록체인에 기록해 봐요!</h4>
             <h4><a target="_blank" style={aColor} href="https://p5js.org/examples/form-shape-primitives.html">p5 사용법 보기</a></h4>
             <p><strong>* 빨간 사각형 예시 ('p.'를 앞에 붙이야 합니다')</strong></p>
             <p>
@@ -274,7 +290,7 @@ class MyMediaart extends React.Component {
           </div>
           {/* <label>
                 Name: */}
-          <textarea style={{ "padding": "0" }} rows="10" cols="80" value={this.state.value} onChange={this.handleChange}></textarea>
+          <textarea rows="10" cols="100" value={this.state.value} onChange={this.handleChange}></textarea>
           {/* </label> */}
         </div>
         <div style={buttonStyle}>

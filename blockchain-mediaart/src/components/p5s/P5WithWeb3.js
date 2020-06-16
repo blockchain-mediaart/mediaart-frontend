@@ -23,12 +23,12 @@ export default function P5WithWeb3(props) {
   }
 
   const p5CanvasStyle= {
-    "width": "60%",
+    "width": "56%",
 
     "margin": "auto",
     "border": "1.6px groove grey",
     "border-radius": "8px",
-    "padding": "10px"
+    "padding": "10px",
   }
 
   const nameFont = {
