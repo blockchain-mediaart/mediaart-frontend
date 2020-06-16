@@ -13,7 +13,7 @@ export default function P5WithWeb3(props) {
 
   const code = "";
   let codeInput = props.codeInput;
-  // console.log(codeInput)
+  // console.log("codeInput : " +codeInput)
   let name = props.name;
 
   let color = 100;
@@ -23,40 +23,17 @@ export default function P5WithWeb3(props) {
   }
 
   const p5CanvasStyle= {
-    "width": "80%",
+    "width": "56%",
+
     "margin": "auto",
     "border": "1.6px groove grey",
     "border-radius": "8px",
-    "padding": "10px"
+    "padding": "10px",
   }
 
   const nameFont = {
     "fontSize": "3em"
   }
-
-  // if (accounts && accounts.length && networkId === 3) {
-  //   return (
-  //     <div className="provider"style={p5CanvasStyle}>
-      
-  //     <h1 style={nameFont}>{name}</h1>
-  //     <P5Wrapper sketch={sketch} code={codeInput ? codeInput : code} />
-  //     { passToNetworkId(networkId) }  
-  //     </div>
-    
-  //   );
-  // } else if (accounts && accounts.length) {
-  //  return ( <div>
-  //   <h1>Ropsten Testnet이 아닌 {props.networkName} 이더리움에 연결되어 있어 나의 미디어 아트를 불러올 수 없습니다. Ropsten Testnet으로 네트워크 설정을 변경해 주세요</h1>
-  //   { passToNetworkId(networkId) }   
-  // </div>
-  //  )
-  // } else {
-  //   return (<div>
-  //   <h1>이더리움 네트워크에 연결되지 않아 나의 미디어 아트를 불러올 수 없습니다.</h1>
-  //   { passToNetworkId(networkId) }  
-  //   </div>
-  //   )
-  // }
 
   return (
     <div className="provider"style={p5CanvasStyle}>
@@ -67,7 +44,7 @@ export default function P5WithWeb3(props) {
         <P5Wrapper sketch={sketch} code={codeInput ? codeInput : code} />
         : accounts && accounts.length ?
          <ReDirectWhenDisconnectd networkName={networkName} />
-          : <h1>이더리움 네트워크에 연결되지 않아 나의 미디어 아트를 불러올 수 없습니다.</h1>
+          : <h1 style={{ "fontSize": "2em"}}>이더리움 네트워크에 연결되지 않아 나의 미디어 아트를 불러올 수 없습니다.</h1>
 
       }
       
@@ -78,7 +55,7 @@ export default function P5WithWeb3(props) {
 function ReDirectWhenDisconnectd(props) {
   return(
     <div>
-    <h1>Ropsten Testnet이 아닌 {props.networkName} 이더리움에 연결되어 있어 나의 미디어 아트를 불러올 수 없습니다. Ropsten Testnet으로 네트워크 설정을 변경해 주세요</h1>
+    <h1 style={{ "fontSize": "2em"}} >Ropsten Testnet이 아닌 {props.networkName} 이더리움에 연결되어 있어 나의 미디어 아트를 불러올 수 없습니다. Ropsten Testnet으로 네트워크 설정을 변경해 주세요</h1>
          
   </div>
   )

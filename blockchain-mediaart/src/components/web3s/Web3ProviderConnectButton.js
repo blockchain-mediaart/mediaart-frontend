@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react';
 import { useWeb3 } from '@openzeppelin/network/react';
-import { Color } from 'p5';
+// import { Color } from 'p5';
+import checkEtherConnected from './checkEtherConnected';
 
 export default function Web3ProviderConnectButton() {
+  checkEtherConnected();
   const web3Context = useWeb3();
   return (
     <div className="provider">
@@ -29,9 +31,9 @@ function Web3Data(props) {
 
   return (
     <div>
-      <div>
+      {/* <div>
       <p><strong>Your address:</strong> {accounts && accounts.length ? accounts[0] : 'Unknown'}</p>
-      </div>
+      </div> */}
       <div>
         <p><strong>Provider :</strong> {providerName}</p>
         <p><strong>Network :</strong> {networkName}  (id:{networkId}) </p>
@@ -39,7 +41,7 @@ function Web3Data(props) {
 
       {accounts && accounts.length ? (
         <div>
-          {networkName} 이더리움에 연결되었습니다
+          {/* {networkName} 이더리움에 연결되었습니다 */}
         </div>
       ) : !!networkId ? (
         <div>

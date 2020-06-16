@@ -21,11 +21,12 @@ class Main extends React.Component {
           <h1>안녕하세요.</h1>
           <p>이곳은 블록체인기반 미디어 아트 플랫폼 <strong>ABC</strong>(Art with Block-Chain)입니다.</p> 
           <p><strong>ABC</strong>는 이름처럼 쉽지만, 많은 걸 가능하게 하죠.</p>
-          <p> 지금 시작해보세요!  </p>
+          <p> 나만의 미디어아트를 만들어 블록체인에 기록하세요!</p>
+          {/* <p> 지금 시작해보세요! </p> */}
           <p className="lead">
             <Link to="./Gallery" class="btn btn-outline-success"><strong>View More</strong></Link>
           </p>
-        <Media className="mt-1">
+        {/* <Media className="mt-1">
           <Media left middle href="/mosa-lina">
             <P5Wrapper sketch={sketch} />
           </Media>
@@ -57,7 +58,7 @@ class Main extends React.Component {
                 </Media>
                 media art 3
               </Media>
-          </Media>
+          </Media> */}
       </div>
     );
   }

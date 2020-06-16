@@ -1,8 +1,4 @@
-// p5.js without react
-
-const sampleCode = "p.normalMaterial();p.fill(100, 200, 230);p.translate(0, 0, 0);p.push();p.rotateZ(p.frameCount * 0.01);p.rotateX(p.frameCount * 0.01);p.rotateY(p.frameCount * 0.01);p.cylinder(80, 80);p.pop();";
-
-export default function sketch(p) {
+export default function sketchWithSmartContract(p) {
   let rotation = 0;
   let color= 255;
   let code = "";
@@ -17,8 +13,7 @@ export default function sketch(p) {
 
   p.myCustomRedrawAccordingToNewPropsHandler = function (props) {
     code = props.code;
-    color = props.color;
-    // console.log("code : "+ code)
+    // color = props.color;
     if (props.rotation) {
       rotation = props.rotation * Math.PI / 180;
     }
